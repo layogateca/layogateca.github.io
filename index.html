@@ -996,6 +996,7 @@
   }
   .footer-bottom a{ display: inline; font-size: 0.78rem; color: rgba(255,246,236,0.5); text-decoration: underline; text-decoration-color: rgba(255,246,236,0.2);}
   .footer-bottom a:hover{ color: var(--accent-sun); }
+  .footer-legal{ display: inline-flex; gap: 1.2rem; flex-wrap: wrap; }
 
   /* ---------- TWEAKS PANEL ---------- */
   .tweaks{
@@ -1174,6 +1175,53 @@
     font-size: 0.78rem; color: var(--ink-soft);
     margin-top: 1rem; line-height: 1.5;
   }
+  /* ---- Consentiment i informació de protecció de dades (RGPD) ---- */
+  .form-consent{
+    display: flex; flex-direction: column; gap: 0.7rem;
+    margin-top: 0.2rem;
+    padding: 1rem 1.1rem;
+    background: rgba(212,132,74,0.07);
+    border-radius: 14px;
+  }
+  .consent-row{
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    font-size: 0.82rem; line-height: 1.5;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .consent-row input[type="checkbox"]{
+    flex: 0 0 auto;
+    width: 18px; height: 18px;
+    margin-top: 0.12rem;
+    accent-color: var(--accent-warm);
+    cursor: pointer;
+  }
+  .consent-row a{ color: var(--accent-warm); text-decoration: underline; }
+  .consent-row a:hover{ color: var(--ink); }
+  .consent-row .req{ color: var(--accent-warm); font-weight: 700; }
+  .consent-row.invalid span{ color: #b03a2e; }
+  .consent-row.invalid input[type="checkbox"]{ outline: 2px solid #b03a2e; outline-offset: 2px; }
+  .consent-error{
+    font-size: 0.78rem; color: #b03a2e; font-weight: 600; line-height: 1.4;
+  }
+  .form-legal{
+    font-size: 0.78rem; color: var(--ink-soft);
+    border-top: 1px solid rgba(58,36,24,0.12);
+    padding-top: 0.9rem; margin-top: 0.3rem;
+  }
+  .form-legal summary{
+    cursor: pointer; font-weight: 600; color: var(--ink);
+    font-size: 0.78rem; letter-spacing: 0.02em;
+  }
+  .form-legal summary:hover{ color: var(--accent-warm); }
+  .form-legal dl{ margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
+  .form-legal dt{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.66rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink);
+    font-weight: 600;
+  }
+  .form-legal dd{ margin: 0 0 0.35rem; line-height: 1.5; }
+  .form-legal a{ color: var(--accent-warm); }
   .form-success{
     display: none;
     text-align: center; padding: 2rem 0 0.5rem;
@@ -1527,7 +1575,10 @@
   </div>
   <div class="footer-bottom">
     <span>© 2026 La Yogateca — Estudi de ioga . L'Hospitalet de Ll. - Cornellà de Ll. - Barcelona</span>
-    <a href="politica-de-privacitat.html">Política de privacitat</a>
+    <span class="footer-legal">
+      <a href="politica-de-privacitat.html">Política de privacitat</a>
+      <a href="avis-legal.html">Avís legal</a>
+    </span>
   </div>
 </footer>
 
@@ -1745,10 +1796,43 @@
           <label for="f-msg">Missatge (opcional)</label>
           <textarea id="f-msg" name="message" placeholder="Explica'ns una mica sobre tu..."></textarea>
         </div>
+        <div class="form-consent">
+          <label class="consent-row" for="f-privacy">
+            <input type="checkbox" id="f-privacy" name="consent_privacy" value="Sí" required>
+            <span>He llegit i accepto la <a href="politica-de-privacitat.html" target="_blank" rel="noopener">política de privacitat</a>, i consento que La Yogateca tracti les meves dades per respondre aquesta sol·licitud. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+          <label class="consent-row" for="f-age">
+            <input type="checkbox" id="f-age" name="consent_edat" value="Sí" required>
+            <span>Tinc 14 anys o més. Si les dades són d'un menor de 14 anys, sóc el seu pare, mare o tutor/a legal i n'autoritzo el tractament. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+          <label class="consent-row" for="f-marketing">
+            <input type="checkbox" id="f-marketing" name="consent_comunicacions" value="Sí">
+            <span><strong>Opcional:</strong> vull rebre informació sobre cursos, tallers i novetats de La Yogateca. Puc retirar aquest consentiment quan vulgui.</span>
+          </label>
+          <p class="consent-error" id="consentError" role="alert" hidden>Per enviar el formulari cal acceptar la política de privacitat i confirmar l'edat.</p>
+        </div>
         <div class="form-actions">
           <button type="submit" class="btn-primary">Enviar <span class="arr">→</span></button>
         </div>
-        <p class="form-note">En enviar aquest formulari acceptes que ens posem en contacte amb tu. Mai compartirem les teves dades.</p>
+        <details class="form-legal">
+          <summary>Informació bàsica sobre protecció de dades</summary>
+          <dl>
+            <dt>Responsable</dt>
+            <dd>Laura Tapiador López (La Yogateca) — <a href="mailto:hola@layogateca.com">hola@layogateca.com</a></dd>
+            <dt>Finalitat</dt>
+            <dd>Atendre la teva consulta i contactar-te sobre l'activitat que t'interessa. Si ho autoritzes expressament, enviar-te informació sobre cursos, tallers i novetats.</dd>
+            <dt>Legitimació</dt>
+            <dd>El teu consentiment (art. 6.1.a RGPD). Facilitar les dades és voluntari, però sense elles no podem contactar-te.</dd>
+            <dt>Destinataris</dt>
+            <dd>Formspree Inc. (EUA), que ens presta el servei d'enviament de formularis, amb les garanties de transferència internacional previstes al RGPD. No cedim les teves dades a ningú més.</dd>
+            <dt>Conservació</dt>
+            <dd>El temps necessari per atendre la consulta i, si has acceptat rebre comunicacions, fins que retiris el consentiment.</dd>
+            <dt>Drets</dt>
+            <dd>Accés, rectificació, supressió, oposició, limitació, portabilitat i retirada del consentiment escrivint a <a href="mailto:hola@layogateca.com">hola@layogateca.com</a>. També pots reclamar davant l'<a href="https://www.aepd.es" target="_blank" rel="noopener">AEPD</a>.</dd>
+            <dt>Més informació</dt>
+            <dd><a href="politica-de-privacitat.html" target="_blank" rel="noopener">Política de privacitat completa</a></dd>
+          </dl>
+        </details>
       </form>
     </div>
     <div class="form-success" id="formSuccess">
@@ -1779,6 +1863,9 @@
       success.classList.remove('show');
       content.style.display = '';
       form.reset();
+      clearConsentErrors();
+      const btn = form.querySelector('.form-actions button');
+      if(btn){ btn.disabled = false; }
     }, 400);
   }
   document.querySelectorAll('[data-open-form]').forEach(el=>{
@@ -1855,10 +1942,48 @@
   });
   afaOverlay.addEventListener('click', e=>{ if(e.target === afaOverlay) closeAfa(); });
   document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && afaOverlay.classList.contains('open')) closeAfa(); });
+  // ---- Consentiment RGPD: validació visible + registre de l'evidència ----
+  const PRIVACY_VERSION = '2026-07-25';
+  const consentError = document.getElementById('consentError');
+  const cbPrivacy = document.getElementById('f-privacy');
+  const cbAge = document.getElementById('f-age');
+  const cbMarketing = document.getElementById('f-marketing');
+  const requiredConsents = [cbPrivacy, cbAge];
+
+  function clearConsentErrors(){
+    consentError.hidden = true;
+    requiredConsents.forEach(cb=> cb.closest('.consent-row').classList.remove('invalid'));
+  }
+  function checkConsents(){
+    let ok = true;
+    requiredConsents.forEach(cb=>{
+      const row = cb.closest('.consent-row');
+      if(cb.checked){ row.classList.remove('invalid'); }
+      else { row.classList.add('invalid'); ok = false; }
+    });
+    consentError.hidden = ok;
+    if(!ok){
+      const first = requiredConsents.find(cb=> !cb.checked);
+      if(first) first.focus();
+    }
+    return ok;
+  }
+  requiredConsents.forEach(cb=> cb.addEventListener('change', ()=>{
+    if(cb.checked) cb.closest('.consent-row').classList.remove('invalid');
+    if(requiredConsents.every(c=> c.checked)) consentError.hidden = true;
+  }));
+
   form.addEventListener('submit', e=>{
     e.preventDefault();
+    if(!checkConsents()) return;
     if(!form.checkValidity()){ form.reportValidity(); return; }
     const data = new FormData(form);
+    // Evidència del consentiment (art. 7.1 RGPD: hem de poder demostrar-lo)
+    data.set('consent_comunicacions', cbMarketing.checked ? 'Sí' : 'No');
+    data.set('consent_data_hora', new Date().toISOString());
+    data.set('consent_versio_politica', PRIVACY_VERSION);
+    data.set('consent_text', cbPrivacy.closest('.consent-row').innerText.replace(/\s+/g,' ').trim());
+    data.set('consent_origen', location.href);
     const submitBtn = form.querySelector('.form-actions button');
     if(submitBtn){ submitBtn.disabled = true; }
     fetch('https://formspree.io/f/xeeyrokl', {
