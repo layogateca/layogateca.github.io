@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Yogateca — Estudi de ioga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Montserrat:wght@300;400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #fff6ec;            /* crema cálida muy clara */
+    --bg-soft: #ffe8d2;       /* melocotón pastel */
+    --bg-deep: #ffd9b8;       /* naranja pastel medio */
+    --bg-pop: #ffc48a;        /* naranja pop */
+    --ink: #3a2418;           /* marrón chocolate cálido */
+    --ink-soft: #6b4a38;      /* marrón canela */
+    --muted: #a68770;         /* beige */
+    --accent: #f08a4b;        /* naranja pastel principal */
+    --accent-warm: #ee6c3e;   /* terracota brillante */
+    --accent-sun: #ffb347;    /* amarillo-naranja sol */
+    --accent-soft: #f4a87c;   /* naranja suave */
+    --accent-green: #8fb26a;  /* verde pistacho */
+    --accent-pink: #f5a3a3;   /* rosa pastel */
+    --line: #f0c9a5;
+    --radius: 24px;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    font-family: 'Montserrat', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-weight: 400;
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection{ background: var(--accent-warm); color:#fff; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 246, 236, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0 3rem;
+    height: 108px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(240,138,75,0.15);
+  }
+  .brand{ display:flex; align-items: center; line-height:1; text-decoration:none; color:var(--ink); position:relative; z-index:2; }
+  .brand img.logo{
+    height: 92px; width: auto; display: block;
+    transition: opacity .25s;
+  }
+  .brand:hover img.logo{ opacity: 0.8; }
+  .nav-links{ display:flex; gap:2rem; list-style:none; align-items:center; }
+  .nav-links a{
+    font-size: 0.82rem; color: var(--ink); text-decoration:none;
+    letter-spacing: 0.02em; font-weight:500;
+    position: relative; padding: 0.5rem 0; transition: color .25s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .nav-links a:hover{ color: var(--accent-warm); }
+  .nav-links a::after{
+    content:''; position:absolute; left:50%; bottom:-3px;
+    width:0; height:6px; background: var(--accent-sun);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    transition: width .35s ease;
+  }
+  .nav-links a:hover::after{ width:6px; }
+  .lang-pill{
+    font-size: 0.72rem !important; letter-spacing: 0.15em !important;
+    background: var(--accent-sun);
+    color: var(--ink) !important;
+    border-radius: 999px;
+    padding: 0.5rem 0.9rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+  }
+  .lang-pill:hover{ background: var(--accent-warm); color: #fff !important; }
+  .lang-pill::after{ display:none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 92vh;
+    padding: 5rem 3rem 6rem;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 50% at 10% 0%, rgba(255,180,120,0.3), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 90%, rgba(255,200,150,0.35), transparent 60%),
+      var(--bg);
+  }
+  /* Confetti shapes */
+  .confetti{
+    position: absolute; pointer-events:none;
+  }
+  .confetti.c1{ top: 15%; left: 8%; width: 14px; height: 14px; background: var(--accent-green); border-radius: 50%; opacity: 0.5; }
+  .confetti.c2{ top: 75%; left: 12%; width: 18px; height: 18px; background: var(--accent-pink); border-radius: 6px; transform: rotate(15deg); opacity: 0.55; }
+  .confetti.c3{ top: 20%; right: 5%; width: 12px; height: 12px; background: var(--accent-warm); border-radius: 50%; opacity: 0.6; }
+  .confetti.c4{
+    top: auto;
+    bottom: 12%;
+    right: 8%;
+    width: 72px; height: 72px;
+    border: 3px solid var(--accent-warm);
+    border-radius: 50%;
+    opacity: 1;
+    animation: breathe-warm 4s ease-in-out infinite;
+    background: transparent;
+    z-index: 4;
+  }
+  @keyframes float{
+    0%,100%{ transform: translate(0,0) rotate(0deg); }
+    50%{ transform: translate(10px,-15px) rotate(180deg); }
+  }
+
+  .hero-meta{
+    display:inline-flex; align-items:center; gap: 0.7rem;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink); font-weight: 600;
+    margin-bottom: 2rem;
+    background: rgba(255,255,255,0.6);
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .hero-meta .pill-dot{ width: 7px; height: 7px; background: var(--accent-warm); border-radius:50%; display:inline-block; }
+  .hero h1{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+    font-variation-settings: 'wdth' 105;
+  }
+  .hero h1 .line1{ display: block; }
+  .hero h1 .big{
+    color: var(--accent-warm);
+    display: inline-block;
+    position: relative;
+  }
+  .hero h1 .big::after{
+    content: '';
+    position: absolute;
+    bottom: 8%;
+    left: -2%;
+    right: -2%;
+    height: 14%;
+    background: var(--accent-sun);
+    z-index: -1;
+    border-radius: 999px;
+    opacity: 0.55;
+  }
+  .hero h1 .script{
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    color: var(--accent-green);
+    display: inline-block;
+    transform: rotate(-3deg);
+    padding: 0 0.2em;
+    font-size: 0.9em;
+  }
+  .hero-lede{
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+  .hero-actions{ display:flex; gap: 1rem; align-items:center; flex-wrap: wrap;}
+
+  .btn-primary{
+    display:inline-flex; align-items:center; gap: 0.6rem;
+    background: var(--ink);
+    color: #fff6ec;
+    padding: 1.05rem 1.9rem;
+    border-radius: 999px;
+    text-decoration:none;
+    font-size: 0.85rem; letter-spacing: 0.03em;
+    font-weight: 600;
+    transition: all .3s cubic-bezier(0.2,0.8,0.2,1);
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 6px 0 rgba(58,36,24,0.2);
+  }
+  .btn-primary:hover{
+    background: var(--accent-warm);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 rgba(238,108,62,0.3);
+  }
+  .btn-primary .arr{ transition: transform .3s; }
+  .btn-primary:hover .arr{ transform: translateX(4px); }
+
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap: 0.5rem;
+    color: var(--ink); text-decoration:none;
+    padding: 1.05rem 1.6rem;
+    font-size: 0.85rem; letter-spacing: 0.03em;
+    font-weight: 600;
+    background: transparent;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    transition: all .3s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .btn-ghost:hover{ background: var(--ink); color: var(--bg); }
+
+  /* Hero visual */
+  .hero-visual{
+    position: relative;
+    aspect-ratio: 5/6;
+    max-height: 620px;
+    width: 100%;
+    justify-self: center;
+  }
+  .hero-visual::before{
+    content:'';
+    position: absolute; inset: 0;
+    background: var(--accent-sun);
+    border-radius: 40px;
+    transform: rotate(-4deg) translate(3%, 3%);
+    z-index: 1;
+  }
+  .hero-img{
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(58,36,24,0.02), rgba(58,36,24,0.1)),
+      url('assets/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 40px;
+    border: 12px solid #fff;
+    box-shadow: 0 20px 45px rgba(58,36,24,0.18);
+    z-index: 2;
+    filter: saturate(1.02);
+  }
+  .hero-badge{
+    position: absolute;
+    bottom: 5%; left: -8%;
+    background: #fff;
+    padding: 1rem 1.3rem;
+    border-radius: 999px;
+    z-index: 3;
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--accent-warm);
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(58,36,24,0.1);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero-badge .emoji{
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent-green);
+    display: inline-block;
+  }
+  .hero-stats{
+    position: absolute;
+    top: 8%; right: -12%;
+    background: var(--bg-soft);
+    padding: 1rem 1.3rem;
+    border-radius: 18px;
+    z-index: 3;
+    border: 2px dashed var(--accent);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(58,36,24,0.08);
+  }
+  .hero-stats strong{
+    display: block;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent-warm);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .hero-stats.hero-stats-compact{
+    padding: 1rem 1.4rem;
+  }
+  .hero-stats.hero-stats-compact span{
+    font-size: 0.78rem; letter-spacing: 0.22em;
+    color: var(--ink); font-weight: 700;
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+  .hero-stats span{
+    display: block;
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* Breathing indicator */
+  .breath-indicator{
+    position: absolute;
+    bottom: 2rem; left: 3rem;
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.95rem; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .breath-circle{
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent-green);
+    animation: breathe 4s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(143,178,106,0.5);
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.75); opacity: 0.7; box-shadow: 0 0 0 0 rgba(143,178,106,0.5);}
+    50% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 12px rgba(143,178,106,0); }
+  }
+  @keyframes breathe-warm {
+    0%, 100% { transform: scale(0.85); opacity: 1; box-shadow: 0 0 0 0 rgba(204,122,87,0.5);}
+    50% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 18px rgba(204,122,87,0); }
+  }
+
+  /* ---------- MANIFEST ---------- */
+  .manifest{
+    padding: 8rem 3rem 7rem;
+    background: var(--bg);
+    position: relative;
+  }
+  .manifest-inner{
+    max-width: 1100px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.35fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .manifest-label{
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent-warm); font-weight: 700;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .manifest-label::before{
+    content:''; width: 28px; height: 4px;
+    background: var(--accent-sun);
+    border-radius: 999px;
+  }
+  .manifest-text{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(1.7rem, 2.8vw, 2.7rem);
+    line-height: 1.2;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .manifest-text em{
+    color: var(--accent-warm);
+    font-style: normal;
+    font-family: 'Caveat', cursive;
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+  .manifest-text .hl{
+    background: var(--accent-sun);
+    padding: 0 0.2em;
+    border-radius: 8px;
+    color: var(--ink);
+  }
+
+  /* ---------- 3 EIXOS ---------- */
+  .pillars{
+    padding: 7rem 3rem;
+    background: var(--bg-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .pillars::before{
+    content:''; position:absolute;
+    width: 400px; height: 400px;
+    top: -200px; right: -150px;
+    background: var(--accent-sun);
+    border-radius: 50%;
+    opacity: 0.25;
+    filter: blur(40px);
+  }
+  .pillars-header{
+    max-width: 1200px; margin: 0 auto 4.5rem;
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 3rem; flex-wrap: wrap;
+    position: relative; z-index: 2;
+  }
+  .pillars-header-left{ flex: 1 1 auto; min-width: 0; }
+  .pillars-header-right{
+    display: flex; flex-direction: column; align-items: flex-end;
+    flex-shrink: 0;
+    gap: 1.4rem;
+    max-width: 380px;
+  }
+  .pillars-badge{
+    background: #fff;
+    padding: 1rem 1.3rem;
+    border-radius: 999px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--accent-warm);
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(58,36,24,0.1);
+    display: inline-flex; align-items: center; gap: 0.6rem;
+  }
+  .pillars-badge .emoji{
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent-green);
+    display: inline-block;
+  }
+  .pillars-header h2{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .pillars-header h2 em{
+    font-family: 'Caveat', cursive;
+    color: var(--accent-warm);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+  .pillars-header .note{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    max-width: none;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .pillar-grid{
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+    align-items: stretch;
+    position: relative; z-index: 2;
+  }
+  .pillar{
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem 2.2rem;
+    position: relative;
+    transition: transform .35s cubic-bezier(0.2,0.8,0.2,1);
+    display: flex;
+    flex-direction: column;
+  }
+  .pillar:hover{ transform: translateY(-6px) rotate(-0.5deg); }
+  .pillar:nth-child(1){ background: #fff; }
+  .pillar:nth-child(2){ background: var(--bg-deep); }
+  .pillar:nth-child(3){ background: var(--accent-pink); }
+  .pillar-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2.8rem;
+    color: var(--accent-warm);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    background: var(--accent-sun);
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .pillar h3{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .pillar p{
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 0.9rem;
+    font-weight: 400;
+  }
+  .pillar-motto, p.pillar-motto{
+    font-family: 'Caveat', cursive !important;
+    font-size: 1.8rem !important;
+    color: var(--accent-warm);
+    line-height: 1.1;
+    margin-top: auto;
+    padding-top: 1.3rem;
+    border-top: 2px dashed rgba(58,36,24,0.15);
+    font-weight: 600;
+  }
+
+  /* ---------- ACTIVIDADES ---------- */
+  .services{
+    padding: 9rem 3rem;
+    background: var(--bg);
+  }
+  .services-header{
+    max-width: 1100px; margin: 0 auto 5rem;
+    text-align: center;
+  }
+  .eyebrow{
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent-warm); font-weight: 700;
+    margin-bottom: 1.3rem;
+    background: var(--bg-soft);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+  }
+  .eyebrow .dot{
+    width: 6px; height: 6px; background: var(--accent-warm); border-radius: 50%;
+  }
+  .services-header h2{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+    max-width: 18ch;
+    margin: 0 auto;
+    letter-spacing: -0.035em;
+  }
+  .services-header h2 em{
+    font-family: 'Caveat', cursive;
+    color: var(--accent-warm);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+
+  .service{
+    max-width: 1200px; margin: 0 auto 7rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .service:last-child{ margin-bottom: 0; }
+  .service.reverse{ direction: rtl; }
+  .service.reverse > *{ direction: ltr; }
+
+  .service-visual{
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: visible;
+  }
+  .service-visual .img-wrap{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 40% 50% 45% 55% / 50% 45% 55% 50%;
+    transition: border-radius 1s ease;
+  }
+  .service-visual:hover .img-wrap{
+    border-radius: 50% 40% 55% 45% / 45% 55% 50% 55%;
+  }
+  .service-visual img{
+    width:100%; height:100%; object-fit: cover;
+    filter: saturate(1) contrast(0.98);
+    transition: transform 1.2s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .service-visual:hover img{ transform: scale(1.05); }
+  .service-visual .badge{
+    position: absolute; top: 1.5rem; left: 1rem;
+    background: var(--accent-sun);
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 700; color: var(--ink);
+    z-index: 5;
+    box-shadow: 0 8px 20px rgba(238,108,62,0.2);
+    transform: rotate(-4deg);
+  }
+  .service-visual .sticker{
+    position: absolute;
+    bottom: 1.5rem; right: 1rem;
+    background: var(--accent-pink);
+    border-radius: 999px;
+    z-index: 5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 0.55rem 1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(58,36,24,0.1);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .service-visual .sticker::before{
+    content:''; width: 6px; height: 6px; border-radius:50%;
+    background: var(--ink);
+  }
+  .service-visual .sticker.green{ background: var(--accent-green); color: #fff; }
+  .service-visual .sticker.warm{ background: var(--accent-warm); color: #fff; }
+  .service-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent-warm);
+    letter-spacing: 0.18em;
+    margin-bottom: 1rem;
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .service h3{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .service h3 em{
+    font-family: 'Caveat', cursive;
+    color: var(--accent-warm);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+  .service p.lede{
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+  }
+  .service-list{
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed var(--line);
+  }
+  .service-list li{
+    font-size: 0.95rem;
+    color: var(--ink);
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    font-weight: 500;
+  }
+  .service-list li::before{
+    content:'✦'; display:inline-block;
+    color: var(--accent-warm);
+    font-size: 1rem;
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+
+  /* ---------- EQUIPO ---------- */
+  .team{
+    padding: 4rem 3rem 3.5rem;
+    background: var(--bg-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .team::before{
+    content:''; position: absolute;
+    width: 200px; height: 200px;
+    background: var(--accent-sun);
+    border-radius: 50%;
+    top: -60px; left: -60px;
+    opacity: 0.4;
+    filter: blur(20px);
+  }
+  .team-inner{
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative; z-index: 2;
+  }
+  .team-photo{
+    aspect-ratio: 4/5;
+    border-radius: 50% 40% 50% 45% / 45% 50% 45% 55%;
+    position: relative;
+    background: var(--accent-warm);
+  }
+  .team-photo .img-clip{
+    position: absolute; inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+  .team-photo img{
+    width:100%; height:100%; object-fit:cover;
+    filter: saturate(1.05);
+  }
+  .team-photo .sticker-circle{
+    position: absolute;
+    bottom: -10px; left: -10px;
+    background: #fff;
+    border-radius: 999px;
+    z-index: 5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 0.6rem 1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(58,36,24,0.12);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .team-photo .sticker-circle::before{
+    content:''; width: 6px; height: 6px; border-radius:50%;
+    background: var(--accent-warm);
+  }
+  .team .eyebrow{ background: #fff; }
+  .team h2{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2rem, 3.6vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.035em;
+  }
+  .team h2 em{
+    font-family: 'Caveat', cursive;
+    color: var(--accent-warm);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+  .team .role{
+    font-size: 0.74rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent-warm); font-weight: 700;
+    margin-bottom: 2rem;
+    display: block;
+  }
+  .team p{
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 1.1rem;
+    max-width: 55ch;
+    font-weight: 400;
+  }
+  p.team-quote, .team-quote{
+    font-family: 'Caveat', cursive !important;
+    font-size: clamp(2.4rem, 3.5vw, 3.2rem) !important;
+    color: var(--accent-warm) !important;
+    line-height: 1.05 !important;
+    margin-top: 2.2rem !important;
+    font-weight: 600 !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+  }
+  .team-quote::before{ content:'“ '; color: var(--accent-warm); }
+  .team-quote::after{ content:' ”'; color: var(--accent-warm); }
+
+  /* ---------- EVENTOS ---------- */
+  .events{
+    padding: 3.5rem 3rem 9rem;
+    background: var(--bg);
+  }
+  .events-header{
+    max-width: 1200px; margin: 0 auto 4rem;
+    display: flex; flex-direction: column; gap: 1.2rem;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .events-badges{ display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .events-badges .eyebrow{ margin: 0; }
+  .events-header h2{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.035em;
+  }
+  .events-header h2 em{
+    font-family: 'Caveat', cursive;
+    color: var(--accent-warm);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+  .events-grid{
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .event{
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2rem 1.8rem 1.8rem;
+    display: flex; flex-direction: column;
+    min-height: 340px;
+    transition: transform .35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .event:nth-child(1){ background: var(--bg-deep); }
+  .event:nth-child(2){ background: var(--accent-green); color: #fff; }
+  .event:nth-child(2) .event-date{ color: #fff; background: rgba(255,255,255,0.18); }
+  .event:nth-child(2) h4{ color: #fff; }
+  .event:nth-child(2) p{ color: rgba(255,255,255,0.9); }
+  .event:nth-child(2) .event-action{ color: #fff; border-color: rgba(255,255,255,0.6); }
+  .event:nth-child(2) .event-action:hover{ background: #fff; color: var(--accent-green); }
+  .event:nth-child(3){ background: var(--accent-sun); }
+  .event:hover{ transform: translateY(-5px) rotate(-0.5deg); }
+  .event-date{
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink); font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: rgba(58,36,24,0.1);
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+  .event h4{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 0.9rem;
+    letter-spacing: -0.02em;
+  }
+  .event p a{ color: var(--ink-soft); text-decoration: none; transition: color .2s; }
+  .event p a:hover{ color: var(--accent-warm); }
+  .event p{
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    flex: 1;
+    font-weight: 400;
+  }
+  .event-action{
+    margin-top: auto;
+    padding-top: 1.5rem;
+    font-size: 0.78rem; letter-spacing: 0.08em;
+    color: var(--ink); font-weight: 700;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    align-self: flex-start;
+    transition: all .3s;
+  }
+  .event-action:hover{ background: var(--ink); color: var(--bg); }
+  .event-action .arr{ transition: transform .3s; }
+  .event-action:hover .arr{ transform: translateX(3px); }
+  .service .event-action{ margin-top: 2.2rem; }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    padding: 5rem 3rem;
+    background:
+      radial-gradient(circle at 20% 30%, var(--accent-sun), transparent 60%),
+      radial-gradient(circle at 85% 80%, var(--accent-soft), transparent 60%),
+      var(--accent-warm);
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta::after{
+    content:'';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+    top: -200px; left: 50%; transform: translateX(-50%);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  .cta-inner{ position: relative; z-index: 2; max-width: 820px; margin: 0 auto; }
+  .cta .eyebrow{ color: var(--ink); background: var(--accent-sun); }
+  .cta h2{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2rem, 3.6vw, 3.2rem);
+    font-weight: 700;
+    line-height: 0.98;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.035em;
+    color: #fff;
+  }
+  .cta h2 em{
+    font-family: 'Caveat', cursive;
+    color: var(--accent-sun);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.15em;
+  }
+  .cta-actions{ display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;}
+  .cta .btn-primary{
+    background: #fff; color: var(--ink);
+    box-shadow: 0 6px 0 rgba(58,36,24,0.35);
+  }
+  .cta .btn-primary:hover{
+    background: var(--accent-sun); color: var(--ink);
+    box-shadow: 0 8px 0 rgba(58,36,24,0.4);
+  }
+  .cta .btn-ghost{ color: #fff; border-color: #fff; }
+  .cta .btn-ghost:hover{ background: #fff; color: var(--accent-warm); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--bg);
+    padding: 5rem 3rem 2.5rem;
+  }
+  .footer-inner{
+    max-width: 1300px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .footer-brand{ display: flex; justify-content: center; align-items: center; }
+  .footer-brand .brand{ margin-bottom: 0; }
+  .footer-brand .brand .logo-mask{
+    display: block;
+    height: 184px;
+    width: 184px;
+    background-color: var(--accent-sun);
+    -webkit-mask: url('assets/logo-white-transparent.png') center/contain no-repeat;
+    mask: url('assets/logo-white-transparent.png') center/contain no-repeat;
+  }
+  .footer-brand .brand img.logo{
+    height: 184px;
+    width: 184px;
+    object-fit: contain;
+  }
+  .footer-reviews{
+    max-width: 1300px; margin: 0 auto 3.5rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .review-card{
+    background: rgba(255,246,236,0.06);
+    border: 1px solid rgba(255,246,236,0.12);
+    border-radius: 18px;
+    padding: 1.6rem 1.5rem;
+    display: block; text-decoration: none;
+    transition: background .2s, border-color .2s;
+  }
+  .review-card:hover{ background: rgba(255,246,236,0.1); border-color: rgba(255,246,236,0.22); }
+  .review-split{ display: flex; flex-direction: column; gap: 1.4rem; }
+  .review-split a{ display: block; text-decoration: none; }
+  .review-stars{ color: var(--accent-sun); font-size: 0.95rem; letter-spacing: 0.15em; margin-bottom: 0.8rem; }
+  .review-quote{ font-size: 0.92rem; line-height: 1.6; color: rgba(255,246,236,0.75); margin-bottom: 1rem; }
+  .review-author{ font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.85rem; font-weight: 600; color: rgba(255,246,236,0.9); }
+  .review-tag{ font-size: 0.72rem; color: rgba(255,246,236,0.45); margin-top: 0.15rem; }
+  .footer-brand p{
+    color: rgba(255,246,236,0.7);
+    font-size: 0.95rem;
+    max-width: 30ch;
+    margin-top: 1.3rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .footer-brand .brand{ margin-bottom: 0.6rem; }
+  .footer-contact-group{ display: flex; gap: 3rem; justify-self: end; }
+  .footer-where-grid{ display: grid; grid-template-columns: repeat(2, minmax(120px, 1fr)); gap: 0 4.2rem; }
+  .footer-where-grid .line{ white-space: normal; }
+  .footer-where-grid strong{ color: var(--accent-sun); font-weight: 500; }
+  footer h5{
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent-sun); font-weight: 700;
+    margin-bottom: 1.3rem;
+  }
+  footer a, footer p.line{
+    font-size: 0.92rem;
+    color: rgba(255,246,236,0.7);
+    text-decoration: none;
+    display: block;
+    line-height: 2;
+    transition: color .25s;
+    font-weight: 400;
+  }
+  footer a:hover{ color: var(--accent-sun); }
+  .footer-bottom{
+    max-width: 1300px; margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,246,236,0.15);
+    display: flex; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: rgba(255,246,236,0.4);
+  }
+  .footer-bottom a{ display: inline; font-size: 0.78rem; color: rgba(255,246,236,0.5); text-decoration: underline; text-decoration-color: rgba(255,246,236,0.2);}
+  .footer-bottom a:hover{ color: var(--accent-sun); }
+
+  /* ---------- TWEAKS PANEL ---------- */
+  .tweaks{
+    position: fixed; bottom: 20px; right: 20px;
+    background: #fff;
+    border: 2px solid var(--accent-warm);
+    border-radius: 20px;
+    padding: 1.3rem 1.5rem;
+    z-index: 200;
+    box-shadow: 0 20px 50px rgba(58,36,24,0.15);
+    width: 280px;
+    display: none;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .tweaks.show{ display: none; }
+  .tweaks h6{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .tweaks h6::before{ content:'✦ '; color: var(--accent-warm); }
+  .tweaks label{
+    display: block;
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .tweak-row{ margin-bottom: 1.1rem; }
+  .tweak-row:last-child{ margin-bottom: 0; }
+  .swatches{ display: flex; gap: 0.5rem; }
+  .swatch{
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; border: 3px solid transparent;
+    transition: all .2s;
+  }
+  .swatch.active{ border-color: var(--ink); transform: scale(1.05); }
+  .font-opts{ display: flex; gap: 0.35rem; }
+  .font-opt{
+    flex:1; padding: 0.45rem 0.4rem;
+    font-size: 0.68rem; border: 2px solid var(--line);
+    background: transparent; cursor: pointer;
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-family: inherit;
+    transition: all .2s;
+  }
+  .font-opt.active{ background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    nav{ padding: 0 1.3rem; height: 68px; }
+    .nav-links{ display: none; }
+    .brand img.logo{ height: 36px; }
+    .hero{ grid-template-columns: 1fr; padding: 2.5rem 1.3rem 4rem; gap: 3rem; min-height: auto; }
+    .hero-visual{ order: -1; max-height: 460px; }
+    .hero-stats, .hero-badge{ transform: scale(0.85); }
+    .breath-indicator{ display: none; }
+    .manifest{ padding: 5rem 1.3rem; }
+    .manifest-inner{ grid-template-columns: 1fr; gap: 1.5rem; }
+    .pillars, .services, .team, .events, .cta, footer{ padding-left: 1.3rem; padding-right: 1.3rem; }
+    .pillar-grid{ grid-template-columns: 1fr; gap: 1.2rem; }
+    .service{ grid-template-columns: 1fr; gap: 2rem; margin-bottom: 4.5rem;}
+    .service.reverse{ direction: ltr; }
+    .team-inner{ grid-template-columns: 1fr; gap: 2.5rem; }
+    .events-grid{ grid-template-columns: 1fr; }
+    .footer-inner{ grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-reviews{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 1200px){
+    .footer-inner{ grid-template-columns: 1fr 1fr; gap: 2rem 3rem; }
+    .footer-brand{ grid-column: 1 / -1; order: -1; }
+    .footer-reviews{ grid-template-columns: 1fr 1fr 1fr; }
+  }
+  /* ---------- FORM MODAL ---------- */
+  .form-overlay{
+    position: fixed; inset: 0;
+    background: rgba(58,36,24,0.55);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    opacity: 0; visibility: hidden;
+    transition: opacity .35s ease, visibility .35s;
+  }
+  .form-overlay.open{ opacity: 1; visibility: visible; }
+  .form-modal{
+    background: var(--bg);
+    border-radius: 24px;
+    width: 100%; max-width: 580px;
+    max-height: 92vh; overflow-y: auto;
+    padding: 3rem 3rem 2.5rem;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(58,36,24,0.25);
+    transform: translateY(20px) scale(0.98);
+    transition: transform .35s ease;
+  }
+  .form-overlay.open .form-modal{ transform: translateY(0) scale(1); }
+  .form-close{
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: transparent; border: 1px solid rgba(58,36,24,0.18);
+    color: var(--ink); cursor: pointer;
+    font-size: 1.1rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, border-color .2s;
+  }
+  .form-close:hover{ background: var(--ink); color: #fff; border-color: var(--ink); }
+  .form-modal .eyebrow{
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent-warm);
+    font-weight: 700; margin-bottom: 1rem;
+  }
+  .form-modal .eyebrow .dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent-warm);
+  }
+  .form-modal h3{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2rem; font-weight: 700;
+    line-height: 1.05; color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .form-modal h3 em{
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    color: var(--accent-warm);
+  }
+  .form-modal .form-lede{
+    color: var(--ink-soft);
+    font-size: 1rem; line-height: 1.55;
+    margin-bottom: 1.8rem;
+  }
+  .form-grid{ display: grid; gap: 1rem; }
+  .form-field{ display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.98rem; color: var(--ink);
+    background: #fff;
+    border: 1px solid rgba(58,36,24,0.18);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-field textarea{ resize: vertical; min-height: 110px; }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus{
+    outline: none;
+    border-color: var(--accent-warm);
+    box-shadow: 0 0 0 4px rgba(204,122,87,0.12);
+  }
+  .form-actions{
+    display: flex; gap: 0.8rem; align-items: center;
+    margin-top: 0.5rem;
+  }
+  .form-actions .btn-primary{ flex: 1; justify-content: center; }
+  .form-note{
+    font-size: 0.78rem; color: var(--ink-soft);
+    margin-top: 1rem; line-height: 1.5;
+  }
+  .form-success{
+    display: none;
+    text-align: center; padding: 2rem 0 0.5rem;
+  }
+  .form-success.show{ display: block; }
+  .form-success .success-mark{
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin-bottom: 1rem;
+  }
+  .form-success h4{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--ink); margin-bottom: 0.5rem;
+  }
+  .form-success p{ color: var(--ink-soft); }
+  @media (max-width: 720px){
+    .form-modal{ padding: 2.2rem 1.5rem 2rem; border-radius: 20px; }
+    .form-modal h3{ font-size: 1.6rem; }
+  }
+  .family-modal{ padding: 0; overflow: hidden; }
+  .family-modal .family-img{ width: 100%; height: 220px; object-fit: cover; object-position: center 30%; display: block; }
+  .family-modal .family-body{ padding: 2rem 2.4rem 2.4rem; }
+  .family-modal{ max-height: 90vh; overflow-y: auto; }
+  .family-modal .form-actions{ margin-top: 1.6rem; }
+  .curs-schools{ list-style: none; padding: 0; margin: 0.4rem 0 1.2rem; display: flex; flex-direction: column; gap: 0.35rem; }
+  .curs-schools li{ color: var(--ink-soft); font-size: 0.98rem; }
+  .curs-schools li::before{ content: '•'; color: var(--accent-warm); margin-right: 0.5rem; }
+  .curs-note{ background: var(--accent-warm-soft, rgba(212,132,74,0.08)); border-radius: 14px; padding: 0.9rem 1.1rem; font-size: 0.94rem; color: var(--ink-soft); margin: 0 0 1.2rem; line-height: 1.5; }
+  .curs-note strong{ color: var(--ink); }
+  @media (max-width: 720px){
+    .family-modal .family-img{ height: 160px; }
+    .family-modal .family-body{ padding: 1.6rem 1.5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <a href="#" class="brand" aria-label="La Yogateca">
+    <img class="logo" src="assets/logo-black-transparent.png" alt="La Yogateca — Estudi de ioga">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#metode">Mètode</a></li>
+    <li><a href="#activitats">Activitats</a></li>
+    <li><a href="#on-som">On som</a></li>
+    <li><a href="#events">Esdeveniments</a></li>
+    <li><a href="#contacte">Contacte</a></li>
+    <li><a href="#" class="lang-pill">ES</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <span class="confetti c1"></span>
+  <span class="confetti c2"></span>
+  <span class="confetti c3"></span>
+  <span class="confetti c4"></span>
+
+  <div class="hero-content">
+    <div class="hero-meta">
+      <span>Extraescolars</span>
+      <span class="pill-dot"></span>
+      <span>Famílies</span>
+      <span class="pill-dot"></span>
+      <span>Adults</span>
+    </div>
+    <h1>
+      <span class="line1">Ioga per a</span>
+      <span class="big">totes</span>
+      <span class="script">les edats</span>
+    </h1>
+    <p class="hero-lede">
+      Un espai on el moviment, la respiració i l'atenció es converteixen en eines de creixement personal a totes les etapes de la vida.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.instagram.com/layogateca/" target="_blank" rel="noopener" class="btn-primary">
+        Descobreix les classes
+        <span class="arr">→</span>
+      </a>
+      <a href="#" class="btn-ghost" data-open-form data-eyebrow="Prova una classe" data-lede="Deixa'ns les teves dades i et contactarem per reservar la teva classe.">Prova una classe</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img"></div>
+    <div class="hero-stats hero-stats-compact" style="display:none;">
+      <span>Anys acompanyant</span>
+    </div>
+    <div class="hero-badge" style="display:none;">
+      <span class="emoji"></span>
+      Un lloc segur per respirar
+    </div>
+  </div>
+  <div class="breath-indicator">
+    <span class="breath-circle"></span>
+    <span>Respira · Observa · Connecta</span>
+  </div>
+</section>
+
+<!-- ============ MANIFEST ============ -->
+<section class="manifest" id="metode">
+  <div class="manifest-inner">
+    <div class="manifest-label">Manifest</div>
+    <div class="manifest-text">
+      Transformant a través del ioga. Compartir des del cos és <em>cuidar</em>, és <em>escoltar</em>, és <em>confiar</em>. Un espai <span class="hl">amable</span> per créixer bellugant-se —respectant el ritme de cada persona.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 EIXOS ============ -->
+<section class="pillars">
+  <div class="pillars-header">
+    <h2>Tres <em>eixos</em><br>de La Yogateca</h2>
+    <div class="pillars-header-right">
+      <div class="pillars-badge">
+        <span class="emoji"></span>
+        Un lloc segur per respirar
+      </div>
+    </div>
+  </div>
+  <div class="pillar-grid">
+    <div class="pillar">
+      <span class="pillar-num">01</span>
+      <h3>Pràctica vivencial</h3>
+      <p>Connectem amb el cos i la ment, a través de la respiració i la consciència corporal, activant la curiositat natural de cada persona. Asana i Pranayama.</p>
+      <p class="pillar-motto">L'autenticitat com a porta oberta a l'empatia.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">02</span>
+      <h3>Conceptes teòrics</h3>
+      <p>Aprofundim en els fonaments del ioga de forma accessible, des de l'experiència, per a una aplicació intuïtiva i viva.<br>Estil de vida. Filosofia.</p>
+      <p class="pillar-motto">La teoria per apropar-nos, no per allunyar-nos.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">03</span>
+      <h3>Eines concretes</h3>
+      <p>Treballem amb un repertori de tècniques del ioga, dinàmiques d'atenció, i seqüències adaptades a cada grup i moment vital.</p>
+      <p class="pillar-motto">Des de la sensació, l'emoció i l'experimentació.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTIVIDADES ============ -->
+<section class="services" id="activitats">
+  <div class="services-header">
+    <div class="eyebrow"><span class="dot"></span>Ioga per a cada etapa</div>
+    <h2>Les nostres <em>activitats</em></h2>
+  </div>
+
+  <div class="service">
+    <div class="service-visual">
+      <div class="img-wrap">
+        <img src="assets/extraescolar-nens.jpg" alt="Ioga per a infants" style="object-position: center 62%;">
+      </div>
+      <span class="badge">Extraescolar</span>
+      <span class="sticker green">Créixer amb consciència</span>
+    </div>
+    <div>
+      <span class="service-num">— Activitat 01</span>
+      <h3>Ioga per a <em>infants i joves</em></h3>
+      <p class="lede">Un espai viu de moviment conscient al cor de les escoles, on descobreixen la respiració, la concentració i el benestar a través de diferents tècniques de ioga real.</p>
+      <ul class="service-list">
+        <li>Grups reduïts per edats</li>
+        <li>Dinàmiques lúdiques i creatives</li>
+        <li>Eines de gestió emocional</li>
+        <li>Horaris d'extraescolar adaptats</li>
+      </ul>
+      <a href="#" class="event-action" data-open-curs>Vols apuntar-te? <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <div class="service reverse" id="families">
+    <div class="service-visual">
+      <div class="img-wrap">
+        <img src="assets/afa-sessio.jpg" alt="Sessió de ioga en família a l'escola" style="object-position: center 20%;">
+      </div>
+      <span class="badge">Famílies</span>
+      <span class="sticker warm">Tots junts</span>
+    </div>
+    <div>
+      <span class="service-num">— Activitat 02</span>
+      <h3>Sessions especials <em>en família</em></h3>
+      <p class="lede">Sessions pensades perquè infants i adults comparteixin un moment de presència, diversió i connexió. Una experiència única per viure junts.</p>
+      <ul class="service-list">
+        <li>Tallers i sessions especials</li>
+        <li>Adaptades a totes les edats</li>
+        <li>Espai de joc i calma compartida</li>
+      </ul>
+      <a href="#" class="event-action" data-open-afa>Ets un AFA i vols organitzar una sessió? <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <div class="service" id="adults">
+    <div class="service-visual">
+      <div class="img-wrap">
+        <img src="assets/adults.jpg?v=3" alt="Classes particulars" style="object-position: 75% center;">
+      </div>
+      <span class="badge">Adults · 1 : 1</span>
+      <span class="sticker">A mida</span>
+    </div>
+    <div>
+      <span class="service-num">— Activitat 03</span>
+      <h3>Classes particulars<br><em>per a adults</em></h3>
+      <p class="lede">El programa Ioga des de les Bases és un acompanyament personalitzat per conèixer la pràctica de ioga adaptat a tu, segons les teves necessitats i objectius.</p>
+      <ul class="service-list">
+        <li>Construir confiança i autonomia</li>
+        <li>Desenvolupar una auto-pràctica pròpia</li>
+        <li>Integrar-se a classes regulars sense por ni dubtes</li>
+        <li>Observació i connexió amb el teu cos</li>
+      </ul>
+      <a href="ioga-des-de-les-bases.html" class="event-action">Descobreix el programa <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENTOS ============ -->
+<section class="events" id="events">
+  <div class="events-header">
+    <div class="events-badges">
+      <div class="eyebrow"><span class="dot"></span>Curs extraescolar, adults i més...</div>
+      <div class="eyebrow"><span class="dot"></span>Tallers i sessions especials</div>
+    </div>
+    <div>
+      <h2>Propers <em>esdeveniments</em></h2>
+    </div>
+  </div>
+  <div class="events-grid">
+    <article class="event">
+      <div class="event-date">Data per determinar</div>
+      <h4>Taller ioga en família</h4>
+      <p><a href="#" data-open-family>Una sessió especial per compartir moviment i presència en família.</a></p>
+      <a href="#" class="event-action" data-open-family>Més informació <span class="arr">→</span></a>
+    </article>
+    <article class="event">
+      <div class="event-date">A partir de setembre</div>
+      <h4>Vine a conèixer-nos</h4>
+      <p>Vine a provar una classe gratuïta. Omple el formulari i et contactarem per explicar-te com fer-ho.</p>
+      <a href="#" class="event-action" data-open-form data-eyebrow="Prova una classe" data-lede="Deixa'ns les teves dades i et contactarem per reservar la teva classe.">Prova una classe <span class="arr">→</span></a>
+    </article>
+    <article class="event">
+      <div class="event-date">Setembre 2026</div>
+      <h4>Inici curs extraescolar</h4>
+      <p>Inscripcions obertes per al curs 2026–2027. Places limitades per grup d'edat.</p>
+      <a href="#" class="event-action" data-open-curs>Vols apuntar-te? <span class="arr">→</span></a>
+    </article>
+  </div>
+</section>
+
+<!-- ============ EQUIPO ============ -->
+<section class="team" id="equip">
+  <div class="team-inner">
+    <div class="team-photo">
+      <div class="img-clip">
+        <img src="assets/laura.jpg" alt="Laura Tapiador" style="object-position: center 30%;">
+      </div>
+      <div class="sticker-circle">anys acompanyant</div>
+    </div>
+    <div>
+      <div class="eyebrow"><span class="dot"></span>Qui som</div>
+      <h2>Laura <em>Tapiador</em></h2>
+      <span class="role">Fundadora · Professora de ioga</span>
+      <p>Els anys d'experiència et permeten crear un enfocament clar i provat. En el meu cas, és des de l'empatia i les ganes de compartir, donant eines que ens ajudin a viure millor.</p>
+      <p>Membre de la Federació Catalana de Ioga i inscrita al Registre Oficial de Professionals de l'Esport.</p>
+      <p style="font-weight: 600">Els professors que formem l'equip de La Yogateca som persones amb vivències i experiència demostrada en l'acompanyament d'alumnes de totes les edats.</p>
+      <p style="font-family:'Bricolage Grotesque',sans-serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-warm);font-weight:700;margin-top:2.2rem;margin-bottom:0.4rem;">La nostra màxima</p>
+      <p class="team-quote" style="margin-top:0 !important;">El ioga és la història de l'atenció</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="contacte">
+  <div class="cta-inner">
+    <div class="eyebrow"><span class="dot"></span>Tens dubtes?</div>
+    <h2>Escriu-nos i <em>comença a respirar</em>.<br>Estem aquí per acompanyar-te.</h2>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary" data-open-form data-eyebrow="Tens dubtes?" data-lede="Deixa'ns les teves dades i et contactarem per resoldre qualsevol dubte.">Contacta'ns <span class="arr">→</span></a>
+      <a href="https://wa.me/34656997241" class="btn-ghost">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-reviews">
+    <div class="review-card review-split">
+      <a href="https://share.google/sPZfQkBTsRNwSn90X" target="_blank">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote">"Por fin una extraescolar de yoga para peques! Calma, conciencia, respiración… autoconocimiento. Laura es un amor y mi peque va encantada. Gracias!!"</p>
+        <div class="review-author">Neus Arruga</div>
+        <div class="review-tag">Ioga per a nens i nenes · Google</div>
+      </a>
+      <a href="https://share.google/WNWYhKfGpwiE2yMBE" target="_blank">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote">"Mi hija está muy contenta, va súper feliz."</p>
+        <div class="review-author">Elena Villarejo</div>
+        <div class="review-tag">Ioga per a nens i nenes · Google</div>
+      </a>
+    </div>
+    <a class="review-card" href="https://share.google/sPZfQkBTsRNwSn90X" target="_blank">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-quote">"La Yogateca ha estat tot un descobriment a L'Hospitalet. L'oportunitat d'apropar als nens i les seves famílies aquesta disciplina anomenada ioga. Vaig tenir el plaer de conèixer a Laura personalment i vam poder organitzar un taller per a l'escola dels meus fills. Mini sessions on les famílies vam gaudir de respiració conscient i postures en parella per fer una tast ioguí. Gràcies Laura per transmetre d'una manera tan bonica!"</p>
+      <div class="review-author">Ingrid Diaz</div>
+      <div class="review-tag">Ioga en família · Google</div>
+    </a>
+    <a class="review-card" href="https://share.google/h2Sx3yF3QpnXTsTrO" target="_blank">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-quote">"Tuve el placer de conocer a Laura hace unos años impartiendo clases de yoga, su forma sutil y cariñosa de dirigir la clase me gustó mucho. Años más tarde por cosas del destino he realizado un taller con ella "yoga desde la base" y la experiencia me ha encantado. He aprendido bases del yoga que nadie te explica en una clase: concentrarme en mi respiración, tratar bien a mi cuerpo, perder el miedo... Gracias Laura por enseñarme a practicar desde la atención, no desde la exigencia."</p>
+      <div class="review-author">Mafer Andrade Carranza</div>
+      <div class="review-tag">Ioga des de les bases · Google</div>
+    </a>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-where" id="on-som">
+      <h5>On som</h5>
+      <div class="footer-where-grid">
+        <div>
+          <p class="line"><strong>L'Hospitalet de Ll.:</strong></p>
+          <p class="line">Escola Tecla Sala</p>
+          <p class="line" style="white-space:nowrap">Escola Busquets i Punset</p>
+          <p class="line">Escola Paco Candel</p>
+        </div>
+        <div>
+          <p class="line"><strong>Cornellà de Ll.:</strong></p>
+          <p class="line">Escola Martinet</p>
+          <p class="line"><strong>Barcelona:</strong></p>
+          <p class="line">Escola Solc</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-brand">
+      <a href="#" class="brand" aria-label="La Yogateca">
+        <span class="logo-mask" role="img" aria-label="La Yogateca"></span>
+      </a>
+    </div>
+    <div class="footer-contact-group">
+      <div>
+        <h5>Contacte</h5>
+        <a href="mailto:hola@layogateca.com">hola@layogateca.com</a>
+        <a href="https://wa.me/34656997241" target="_blank" rel="noopener">+34 656 99 72 41</a>
+      </div>
+      <div>
+        <h5>Segueix-nos</h5>
+        <a href="https://www.instagram.com/layogateca/" target="_blank">@layogateca</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 La Yogateca — Estudi de ioga . L'Hospitalet de Ll. - Cornellà de Ll. - Barcelona</span>
+    <a href="politica-de-privacitat.html">Política de privacitat</a>
+  </div>
+</footer>
+
+<!-- ============ TWEAKS ============ -->
+<div class="tweaks" id="tweaks">
+  <h6>Tweaks</h6>
+  <div class="tweak-row">
+    <label>Paleta d'accent</label>
+    <div class="swatches" id="palette-sw">
+      <div class="swatch active" data-palette="taronja" style="background: linear-gradient(135deg, #f08a4b 50%, #ffb347 50%);" title="Taronja pastel"></div>
+      <div class="swatch" data-palette="rosa" style="background: linear-gradient(135deg, #f5a3a3 50%, #ffb347 50%);" title="Rosa + mel"></div>
+      <div class="swatch" data-palette="mel" style="background: linear-gradient(135deg, #ffb347 50%, #8fb26a 50%);" title="Mel + pistatxo"></div>
+      <div class="swatch" data-palette="coral" style="background: linear-gradient(135deg, #ff7e5f 50%, #feb47b 50%);" title="Coral"></div>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Títols</label>
+    <div class="font-opts" id="font-sw">
+      <button class="font-opt active" data-font="bricolage">Bricolage</button>
+      <button class="font-opt" data-font="space">Space Grot.</button>
+      <button class="font-opt" data-font="archivo">Archivo</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Fons</label>
+    <div class="swatches" id="bg-sw">
+      <div class="swatch active" data-bg="crema" style="background: #fff6ec;" title="Crema càlida"></div>
+      <div class="swatch" data-bg="melocoto" style="background: #ffe8d2;" title="Melocotó"></div>
+      <div class="swatch" data-bg="blanc" style="background: #fffcf6;" title="Blanc lluminós"></div>
+      <div class="swatch" data-bg="rosa" style="background: #fff0ec;" title="Rosa palo"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": "coral",
+    "font": "space",
+    "bg": "blanc"
+  }/*EDITMODE-END*/;
+
+  const palettes = {
+    taronja: { accent: '#f08a4b', warm: '#ee6c3e', sun: '#ffb347', soft: '#f4a87c', green: '#8fb26a', pink: '#f5a3a3', line: '#f0c9a5' },
+    rosa:    { accent: '#e88a7f', warm: '#d96851', sun: '#ffb347', soft: '#f5a3a3', green: '#8fb26a', pink: '#f5a3a3', line: '#f0c9b8' },
+    mel:     { accent: '#e09b3e', warm: '#d47b2a', sun: '#ffc67a', soft: '#e8b774', green: '#8fb26a', pink: '#f5c28a', line: '#edd4a8' },
+    coral:   { accent: '#ff8565', warm: '#ff6240', sun: '#feb47b', soft: '#ffa085', green: '#7fb08a', pink: '#ffb5a8', line: '#fcc8b4' }
+  };
+  const bgs = {
+    crema:    { bg: '#fff6ec', soft: '#ffe8d2', deep: '#ffd9b8', line: '#f0c9a5' },
+    melocoto: { bg: '#ffe8d2', soft: '#ffd9b8', deep: '#ffc89a', line: '#f0b580' },
+    blanc:    { bg: '#fffcf6', soft: '#fff0e0', deep: '#ffe0c2', line: '#f2d2b0' },
+    rosa:     { bg: '#fff0ec', soft: '#ffe0d5', deep: '#ffcfbf', line: '#f0c0b0' }
+  };
+  const fonts = {
+    bricolage: "'Bricolage Grotesque', sans-serif",
+    space: "'Space Grotesque', 'Montserrat', sans-serif",
+    archivo: "'Archivo Black', 'Montserrat', sans-serif"
+  };
+
+  // Load extra fonts for tweaks
+  const extraFontLink = document.createElement('link');
+  extraFontLink.rel = 'stylesheet';
+  extraFontLink.href = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Archivo+Black&display=swap';
+  document.head.appendChild(extraFontLink);
+
+  function applyTweaks(t){
+    const p = palettes[t.palette] || palettes.taronja;
+    const b = bgs[t.bg] || bgs.crema;
+    const root = document.documentElement.style;
+    root.setProperty('--accent', p.accent);
+    root.setProperty('--accent-warm', p.warm);
+    root.setProperty('--accent-sun', p.sun);
+    root.setProperty('--accent-soft', p.soft);
+    root.setProperty('--accent-green', p.green);
+    root.setProperty('--accent-pink', p.pink);
+    root.setProperty('--bg', b.bg);
+    root.setProperty('--bg-soft', b.soft);
+    root.setProperty('--bg-deep', b.deep);
+    root.setProperty('--line', b.line);
+
+    const style = document.getElementById('dynFont') || (() => {
+      const s = document.createElement('style'); s.id='dynFont'; document.head.appendChild(s); return s;
+    })();
+    style.textContent = `
+      .hero h1, .manifest-text, .pillars-header h2, .pillar h3, .services-header h2, .service h3, .team h2, .events-header h2, .event h4, .cta h2, .tweaks h6, .pillar-num, .hero-stats strong {
+        font-family: ${fonts[t.font]};
+      }`;
+
+    document.querySelectorAll('#palette-sw .swatch').forEach(s => s.classList.toggle('active', s.dataset.palette === t.palette));
+    document.querySelectorAll('#bg-sw .swatch').forEach(s => s.classList.toggle('active', s.dataset.bg === t.bg));
+    document.querySelectorAll('#font-sw .font-opt').forEach(s => s.classList.toggle('active', s.dataset.font === t.font));
+  }
+
+  let state = { ...TWEAK_DEFAULTS };
+  applyTweaks(state);
+
+  document.querySelectorAll('#palette-sw .swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      state.palette = s.dataset.palette;
+      applyTweaks(state);
+      window.parent.postMessage({type:'__edit_mode_set_keys', edits:{palette: state.palette}}, '*');
+    });
+  });
+  document.querySelectorAll('#bg-sw .swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      state.bg = s.dataset.bg;
+      applyTweaks(state);
+      window.parent.postMessage({type:'__edit_mode_set_keys', edits:{bg: state.bg}}, '*');
+    });
+  });
+  document.querySelectorAll('#font-sw .font-opt').forEach(s => {
+    s.addEventListener('click', () => {
+      state.font = s.dataset.font;
+      applyTweaks(state);
+      window.parent.postMessage({type:'__edit_mode_set_keys', edits:{font: state.font}}, '*');
+    });
+  });
+
+  window.addEventListener('message', (e) => {
+    if (!e.data || typeof e.data !== 'object') return;
+    if (e.data.type === '__activate_edit_mode') document.getElementById('tweaks').classList.add('show');
+    if (e.data.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('show');
+  });
+  window.parent.postMessage({type:'__edit_mode_available'}, '*');
+</script>
+
+<!-- ============ AFA MODAL ============ -->
+<div class="form-overlay" id="afaOverlay" aria-hidden="true">
+  <div class="form-modal family-modal" role="dialog" aria-modal="true" aria-labelledby="afaTitle">
+    <button class="form-close" aria-label="Tancar" data-close-afa>✕</button>
+    <div class="family-body">
+      <div class="eyebrow"><span class="dot"></span>Sessions per a AFA i escoles</div>
+      <h3 id="afaTitle">Ets un AFA i vols <em>organitzar una sessió?</em></h3>
+      <p class="form-lede">Organitzem sessions especials de ioga en família per a AFA, escoles i entitats. Deixa'ns el teu contacte i et n'expliquem els detalls.</p>
+      <div class="form-actions">
+        <a href="#" class="btn-primary" data-open-form data-close-afa data-eyebrow="Sessió per a AFA" data-lede="Deixa'ns les teves dades i et contactarem per organitzar la sessió." data-interest="families">Vull més informació <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CURS MODAL ============ -->
+<div class="form-overlay" id="cursOverlay" aria-hidden="true">
+  <div class="form-modal family-modal" role="dialog" aria-modal="true" aria-labelledby="cursTitle">
+    <button class="form-close" aria-label="Tancar" data-close-curs>✕</button>
+    <div class="family-body">
+      <div class="eyebrow"><span class="dot"></span>Aquest curs, a la teva escola...</div>
+      <h3 id="cursTitle">IOGA per infants i joves, <em>t'hi apuntes?</em></h3>
+      <p class="form-lede">De 5 a 14 anys. Vine, prova i respira.</p>
+      <p class="form-lede"><strong>On?</strong></p>
+      <ul class="curs-schools">
+        <li>Escola Tecla Sala · L'Hospitalet de Ll.</li>
+        <li>Escola Busquets i Punset · L'Hospitalet de Ll.</li>
+        <li>Escola Paco Candel · L'Hospitalet de Ll.</li>
+        <li>Escola Martinet · Cornellà</li>
+        <li>Escola Solc · Barcelona</li>
+      </ul>
+      <p class="curs-note"><strong>No vas a cap d'aquestes escoles?</strong> No hi ha problema, també t'hi pots apuntar. Escriu-nos i t'expliquem com.</p>
+      <p class="form-lede">Omple el formulari i t'enviarem tota la informació.</p>
+      <div class="form-actions">
+        <a href="#" class="btn-primary" data-open-form data-close-curs data-eyebrow="Curs extraescolar" data-lede="Deixa'ns les teves dades i t'enviarem tota la informació del curs." data-interest="extraescolar">Vull més informació <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FAMILY WORKSHOP MODAL ============ -->
+<div class="form-overlay" id="familyOverlay" aria-hidden="true">
+  <div class="form-modal family-modal" role="dialog" aria-modal="true" aria-labelledby="familyTitle">
+    <button class="form-close" aria-label="Tancar" data-close-family>✕</button>
+    <img class="family-img" src="assets/familia.jpg" alt="Ioga en família">
+    <div class="family-body">
+      <div class="eyebrow" id="familyEyebrow"><span class="dot"></span>Taller ioga en família</div>
+      <h3 id="familyTitle">Encara no tenim <em>data</em></h3>
+      <p class="form-lede">Ara mateix no tenim cap taller en família programat. Si vols rebre informació quan obrim noves places, deixa'ns el teu contacte i t'avisarem.</p>
+      <div class="form-actions">
+        <a href="#" class="btn-primary" data-open-form data-close-family data-eyebrow="Taller ioga en família" data-lede="Deixa'ns les teves dades i et contactarem per informar-te de la propera classe." data-interest="families">Deixa el teu contacte <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FORM MODAL ============ -->
+<div class="form-overlay" id="formOverlay" aria-hidden="true">
+  <div class="form-modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+    <button class="form-close" aria-label="Tancar" data-close-form>✕</button>
+    <div class="form-content">
+      <div class="eyebrow" id="formEyebrow"><span class="dot"></span>Taller ioga en família</div>
+      <h3 id="formTitle">Vine a <em>respirar</em> amb nosaltres</h3>
+      <p class="form-lede" id="formLede">Deixa'ns les teves dades i et contactarem per informar-te de la propera classe.</p>
+      <form class="form-grid" id="contactForm" novalidate>
+        <div class="form-field">
+          <label for="f-name">Nom</label>
+          <input type="text" id="f-name" name="name" required autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label for="f-email">Correu electrònic</label>
+          <input type="email" id="f-email" name="email" required autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label for="f-phone">Telèfon</label>
+          <input type="tel" id="f-phone" name="phone" autocomplete="tel">
+        </div>
+        <div class="form-field">
+          <label for="f-interest">M'interessa</label>
+          <select id="f-interest" name="interest">
+            <option value="infants">Ioga per a nens i nenes</option>
+            <option value="families">Ioga en família</option>
+            <option value="bases">Ioga des de les Bases</option>
+            <option value="extraescolar">Informació curs extraescolar</option>
+            <option value="altres">Altres</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="f-msg">Missatge (opcional)</label>
+          <textarea id="f-msg" name="message" placeholder="Explica'ns una mica sobre tu..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Enviar <span class="arr">→</span></button>
+        </div>
+        <p class="form-note">En enviar aquest formulari acceptes que ens posem en contacte amb tu. Mai compartirem les teves dades.</p>
+      </form>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <div class="success-mark">✓</div>
+      <h4>Gràcies!</h4>
+      <p>Hem rebut el teu missatge. Ens posarem en contacte aviat.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const overlay = document.getElementById('formOverlay');
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  const content = overlay.querySelector('.form-content');
+  function open(){
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(()=>{ document.getElementById('f-name').focus(); }, 350);
+  }
+  function close(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    setTimeout(()=>{
+      success.classList.remove('show');
+      content.style.display = '';
+      form.reset();
+    }, 400);
+  }
+  document.querySelectorAll('[data-open-form]').forEach(el=>{
+    el.addEventListener('click', e=>{
+      e.preventDefault();
+      document.getElementById('formEyebrow').lastChild.textContent = el.dataset.eyebrow || 'Tens dubtes?';
+      document.getElementById('formLede').textContent = el.dataset.lede || "Deixa'ns les teves dades i et contactarem per resoldre qualsevol dubte.";
+      document.getElementById('f-interest').value = el.dataset.interest || 'infants';
+      open();
+    });
+  });
+  document.querySelectorAll('[data-close-form]').forEach(el=>{
+    el.addEventListener('click', close);
+  });
+  overlay.addEventListener('click', e=>{ if(e.target === overlay) close(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && overlay.classList.contains('open')) close(); });
+
+  const familyOverlay = document.getElementById('familyOverlay');
+  function openFamily(){
+    familyOverlay.classList.add('open');
+    familyOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFamily(){
+    familyOverlay.classList.remove('open');
+    familyOverlay.setAttribute('aria-hidden','true');
+    if(!overlay.classList.contains('open')) document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-open-family]').forEach(el=>{
+    el.addEventListener('click', e=>{ e.preventDefault(); openFamily(); });
+  });
+  document.querySelectorAll('[data-close-family]').forEach(el=>{
+    el.addEventListener('click', closeFamily);
+  });
+  familyOverlay.addEventListener('click', e=>{ if(e.target === familyOverlay) closeFamily(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && familyOverlay.classList.contains('open')) closeFamily(); });
+
+  const cursOverlay = document.getElementById('cursOverlay');
+  function openCurs(){
+    cursOverlay.classList.add('open');
+    cursOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCurs(){
+    cursOverlay.classList.remove('open');
+    cursOverlay.setAttribute('aria-hidden','true');
+    if(!overlay.classList.contains('open')) document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-open-curs]').forEach(el=>{
+    el.addEventListener('click', e=>{ e.preventDefault(); openCurs(); });
+  });
+  document.querySelectorAll('[data-close-curs]').forEach(el=>{
+    el.addEventListener('click', closeCurs);
+  });
+  cursOverlay.addEventListener('click', e=>{ if(e.target === cursOverlay) closeCurs(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && cursOverlay.classList.contains('open')) closeCurs(); });
+
+  const afaOverlay = document.getElementById('afaOverlay');
+  function openAfa(){
+    afaOverlay.classList.add('open');
+    afaOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAfa(){
+    afaOverlay.classList.remove('open');
+    afaOverlay.setAttribute('aria-hidden','true');
+    if(!overlay.classList.contains('open')) document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-open-afa]').forEach(el=>{
+    el.addEventListener('click', e=>{ e.preventDefault(); openAfa(); });
+  });
+  document.querySelectorAll('[data-close-afa]').forEach(el=>{
+    el.addEventListener('click', closeAfa);
+  });
+  afaOverlay.addEventListener('click', e=>{ if(e.target === afaOverlay) closeAfa(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && afaOverlay.classList.contains('open')) closeAfa(); });
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    const data = new FormData(form);
+    const submitBtn = form.querySelector('.form-actions button');
+    if(submitBtn){ submitBtn.disabled = true; }
+    fetch('https://formspree.io/f/xeeyrokl', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(res=>{
+      if(res.ok){
+        content.style.display = 'none';
+        success.classList.add('show');
+      } else {
+        if(submitBtn){ submitBtn.disabled = false; }
+        alert('No hem pogut enviar el missatge. Torna-ho a provar.');
+      }
+    }).catch(()=>{
+      if(submitBtn){ submitBtn.disabled = false; }
+      alert('No hem pogut enviar el missatge. Torna-ho a provar.');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
