@@ -1040,7 +1040,19 @@
     }
     .breath-circle{ width: 9px; height: 9px; }
     /* Sense buit lateral, les formes es retiren a les cantonades. */
-    .confetti.c1{ top: 1.5%; left: 5%; width: 11px; height: 11px; }
+    /* Ancorat a la xapa, com a l'escriptori: espia per sota del cantó. */
+    /* La xapa demanava 358px i es tallava per sota de 380px d'amplada:
+       s'estreny i, si encara no hi cap, parteix en dues línies. */
+    .hero-meta{
+      position: relative;
+      max-width: 100%;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+    }
+    .confetti.c1{ top: auto; bottom: -7px; left: 9px; width: 12px; height: 12px; }
     /* El quadrat i el punt baixen amb l'anell: a dalt queien sobre la xapa.
        Alçades desiguals perquè el grup no sembli una filera. */
     .confetti.c2{
@@ -1066,16 +1078,52 @@
     }
     .manifest{ padding: 5rem 1.3rem; }
     .manifest-inner{ grid-template-columns: 1fr; gap: 1.5rem; }
+    /* Baixa de 27px a 23px: segueix sent la frase més gran de la pàgina,
+       però deixa de cridar. Els buits amb hero i pillars no es toquen. */
+    .manifest-text{ font-size: clamp(1.45rem, 5.9vw, 1.8rem); }
     .pillars, .services, .team, .events, .cta, footer{ padding-left: 1.3rem; padding-right: 1.3rem; }
+    /* Separacions entre blocs, molt amples al mòbil:
+       Tres eixos > Activitats 256px -> 128   (la meitat)
+       Activitats > Esdeveniments 200px -> 68 (un terç)
+       Esdeveniments > Qui som    208px -> 104 (la meitat) */
+    .pillars{ padding-bottom: 3.5rem; }
+    .services{ padding-top: 4.5rem; padding-bottom: 3rem; }
+    .events{ padding-top: 1.25rem; padding-bottom: 4.5rem; }
+    .team{ padding-top: 2rem; }
     .pillar-grid{ grid-template-columns: 1fr; gap: 1.2rem; }
     .service{ grid-template-columns: 1fr; gap: 2rem; margin-bottom: 4.5rem;}
     .service.reverse{ direction: ltr; }
-    .team-inner{ grid-template-columns: 1fr; gap: 2.5rem; }
+    .team-inner{ grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+    /* La xapa puja al cantó de dalt de la foto, com fa la d'anys a baix. */
+    .team-inner .eyebrow{
+      position: absolute;
+      top: 2px; left: 0;
+      z-index: 5;
+      margin-bottom: 0;
+      box-shadow: 0 6px 18px rgba(58,36,24,0.12);
+    }
+    /* La cita tenia prohibit partir-se i mesurava més que la pantalla. */
+    p.team-quote, .team-quote{
+      white-space: normal !important;
+      font-size: clamp(1.9rem, 8.5vw, 2.6rem) !important;
+      line-height: 1.1 !important;
+    }
     .events-grid{ grid-template-columns: 1fr; }
-    .footer-inner{ grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .footer-reviews{ grid-template-columns: 1fr; }
+    /* Dues columnes no hi caben: cadascuna demanava més de 300px. */
+    .footer-inner{ grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+    .footer-brand{ grid-column: 1 / -1; order: -1; }
+    .footer-reviews{ grid-template-columns: minmax(0, 1fr); }
+    /* Apilat, l'alineació a la dreta el deixava sagnat respecte "On som". */
+    .footer-contact-group{ justify-self: start; gap: 2.5rem; }
+    /* Les dues columnes d'escoles demanaven 120px mínim més 4,2rem de
+       separació: massa per a un mòbil estret. */
+    .footer-where-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; }
+    /* En quatre línies, la lletra manuscrita tocava la línia de sota. */
+    .cta h2{ line-height: 1.18; }
   }
-  @media (max-width: 1200px){
+  /* Només tauleta: sense el mínim de 901px aquest bloc guanyava al de
+     900px per anar després, i tornava a posar 3 columnes al mòbil. */
+  @media (min-width: 901px) and (max-width: 1200px){
     .footer-inner{ grid-template-columns: 1fr 1fr; gap: 2rem 3rem; }
     .footer-brand{ grid-column: 1 / -1; order: -1; }
     .footer-reviews{ grid-template-columns: 1fr 1fr 1fr; }
@@ -1283,10 +1331,10 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <span class="confetti c1"></span>
 
   <div class="hero-content">
     <div class="hero-meta">
+      <span class="confetti c1"></span>
       <span>Extraescolars</span>
       <span class="pill-dot"></span>
       <span>Famílies</span>
