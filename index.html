@@ -244,9 +244,9 @@
     position: absolute; inset: 0;
     background-image:
       linear-gradient(180deg, rgba(58,36,24,0.02), rgba(58,36,24,0.1)),
-      url('assets/hero.jpg');
+      url('assets/hero-banda.jpg');
     background-size: cover;
-    background-position: center 42%;
+    background-position: center;
     border-radius: 32px;
     border: 10px solid #fff;
     box-shadow: 0 20px 45px rgba(58,36,24,0.18);
@@ -1021,10 +1021,18 @@
     .nav-links{ display: none; }
     .brand img.logo{ height: 36px; }
     .hero{ padding: 2.5rem 1.3rem 3.5rem; gap: 2.2rem; min-height: auto; }
+    /* Sense buit lateral que preservar, el titular recupera tota l'amplada. */
+    .hero-content{ max-width: none; }
     /* El titular obre la pàgina; la franja l'acompanya a sota. */
     .hero-visual{ height: clamp(160px, 42vw, 230px); }
     .hero-visual::before{ border-radius: 24px; transform: rotate(-1deg) translate(0.6%, 5%); }
-    .hero-img{ border-radius: 24px; border-width: 7px; }
+    .hero-img{
+      border-radius: 24px; border-width: 7px;
+      /* Versió lleugera: el mòbil no ha de baixar-se la franja de 2000px. */
+      background-image:
+        linear-gradient(180deg, rgba(58,36,24,0.02), rgba(58,36,24,0.1)),
+        url('assets/hero-banda-mobil.jpg');
+    }
     .breath-indicator{
       bottom: 0.85rem; left: 0.85rem;
       font-size: 0.62rem; letter-spacing: 0.18em;
