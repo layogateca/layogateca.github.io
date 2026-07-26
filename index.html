@@ -187,6 +187,36 @@
     font-weight: 400;
   }
   .hero-actions{ display:flex; gap: 1rem; align-items:center; flex-wrap: wrap;}
+  /* A partir de 1280px hi ha lloc per posar els botons al buit de la
+     dreta sense que l'anell els trepitgi. Per sota, es queden a sota
+     del text. Ha d'anar després de la regla de dalt o no la guanya. */
+  @media (min-width: 1280px){
+    .hero-content{
+      max-width: none;
+      display: grid;
+      grid-template-columns: minmax(0, 40rem) 1fr;
+      /* Les tres files (xapa, titular, entradeta) han d'anar declarades:
+         sense elles el "grid-row: 1 / -1" dels botons no abasta res. */
+      grid-template-rows: repeat(3, auto);
+      column-gap: 4.5rem;
+      align-items: center;
+    }
+    .hero-meta{ justify-self: start; }
+    .hero-meta, .hero h1, .hero-lede{ grid-column: 1; }
+    .hero-actions{
+      grid-column: 2;
+      grid-row: 1 / -1;
+      align-self: center;
+      /* Ancorats a la dreta, deixant lliure la franja on viu l'anell
+         (11vw de separació més la seva mida): així acompanyen la
+         pantalla en comptes de quedar-se enganxats al text. */
+      justify-self: end;
+      margin-right: calc(11vw + 7rem);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.9rem;
+    }
+  }
 
   .btn-primary{
     display:inline-flex; align-items:center; gap: 0.6rem;
@@ -1021,8 +1051,10 @@
     .nav-links{ display: none; }
     .brand img.logo{ height: 36px; }
     .hero{ padding: 2.5rem 1.3rem 3.5rem; gap: 2.2rem; min-height: auto; }
-    /* Sense buit lateral que preservar, el titular recupera tota l'amplada. */
-    .hero-content{ max-width: none; }
+    /* Sense buit lateral, el titular recupera tota l'amplada i els
+       botons tornen a sota, en fila. */
+    .hero-content{ display: block; max-width: none; }
+    .hero-actions{ flex-direction: row; gap: 1rem; align-items: center; }
     /* El titular obre la pàgina; la franja l'acompanya a sota. */
     .hero-visual{ height: clamp(160px, 42vw, 230px); }
     .hero-visual::before{ border-radius: 24px; transform: rotate(-1deg) translate(0.6%, 5%); }
