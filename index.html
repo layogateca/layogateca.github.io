@@ -1327,9 +1327,24 @@
   .family-modal .family-body{ padding: 2rem 2.4rem 2.4rem; }
   .family-modal{ max-height: 90vh; overflow-y: auto; }
   .family-modal .form-actions{ margin-top: 1.6rem; }
-  .curs-schools{ list-style: none; padding: 0; margin: 0.4rem 0 1.2rem; display: flex; flex-direction: column; gap: 0.35rem; }
-  .curs-schools li{ color: var(--ink-soft); font-size: 0.98rem; }
-  .curs-schools li::before{ content: '•'; color: var(--accent-warm); margin-right: 0.5rem; }
+  /* Agrupades per població: abans cada línia repetia la ciutat i les
+     de L'Hospitalet no hi cabien en una línia. */
+  .curs-schools{ margin: 0.5rem 0 1.2rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .curs-city-name{
+    margin: 0 0 0.3rem;
+    font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-warm); font-weight: 700;
+  }
+  .curs-city ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+  .curs-city li{ color: var(--ink-soft); font-size: 0.98rem; }
+  .curs-city li::before{ content: '•'; color: var(--accent-warm); margin-right: 0.5rem; }
+  /* Ha d'anar després de les regles de dalt, o no les guanya.
+     "L'Hospitalet de Llobregat" i "Escola Busquets i Punset" encara
+     no hi caben en pantalles estretes: s'estrenyen just el necessari. */
+  @media (max-width: 389px){
+    .curs-city-name{ font-size: 0.7rem; letter-spacing: 0.04em; }
+    .curs-city li{ font-size: 0.9rem; }
+  }
   .curs-note{ background: var(--accent-warm-soft, rgba(212,132,74,0.08)); border-radius: 14px; padding: 0.9rem 1.1rem; font-size: 0.94rem; color: var(--ink-soft); margin: 0 0 1.2rem; line-height: 1.5; }
   .curs-note strong{ color: var(--ink); }
   @media (max-width: 720px){
@@ -1799,13 +1814,28 @@
       <h3 id="cursTitle">IOGA per infants i joves, <em>t'hi apuntes?</em></h3>
       <p class="form-lede">De 5 a 14 anys. Vine, prova i respira.</p>
       <p class="form-lede"><strong>On?</strong></p>
-      <ul class="curs-schools">
-        <li>Escola Tecla Sala · L'Hospitalet de Ll.</li>
-        <li>Escola Busquets i Punset · L'Hospitalet de Ll.</li>
-        <li>Escola Paco Candel · L'Hospitalet de Ll.</li>
-        <li>Escola Martinet · Cornellà</li>
-        <li>Escola Solc · Barcelona</li>
-      </ul>
+      <div class="curs-schools">
+        <div class="curs-city">
+          <p class="curs-city-name">L'Hospitalet de Llobregat</p>
+          <ul>
+            <li>Escola Tecla Sala</li>
+            <li>Escola Busquets i Punset</li>
+            <li>Escola Paco Candel</li>
+          </ul>
+        </div>
+        <div class="curs-city">
+          <p class="curs-city-name">Cornellà de Llobregat</p>
+          <ul>
+            <li>Escola Martinet</li>
+          </ul>
+        </div>
+        <div class="curs-city">
+          <p class="curs-city-name">Barcelona</p>
+          <ul>
+            <li>Escola Solc</li>
+          </ul>
+        </div>
+      </div>
       <p class="curs-note"><strong>No vas a cap d'aquestes escoles?</strong> No hi ha problema, també t'hi pots apuntar. Escriu-nos i t'expliquem com.</p>
       <p class="form-lede">Omple el formulari i t'enviarem tota la informació.</p>
       <div class="form-actions">
