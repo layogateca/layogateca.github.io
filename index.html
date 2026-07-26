@@ -1114,12 +1114,33 @@
     .footer-brand{ grid-column: 1 / -1; order: -1; }
     .footer-reviews{ grid-template-columns: minmax(0, 1fr); }
     /* Apilat, l'alineació a la dreta el deixava sagnat respecte "On som". */
-    .footer-contact-group{ justify-self: start; gap: 2.5rem; }
+    /* Mateixa graella que les escoles, perquè "Segueix-nos" caigui
+       just sota de "Cornellà" i no desalineat. */
+    .footer-contact-group{
+      justify-self: start;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(var(--col-dreta), auto);
+      gap: 0 1.5rem;
+    }
     /* Les dues columnes d'escoles demanaven 120px mínim més 4,2rem de
        separació: massa per a un mòbil estret. */
-    .footer-where-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; }
+    /* Amplada compartida per la segona columna de les dues graelles del
+       peu, perquè "Segueix-nos" caigui exactament sota "Cornellà".
+       És just el que amida "Escola Martinet", que així arriba al marge
+       dret; el minmax evita que es parteixi si el text amidés més. */
+    footer{ --col-dreta: 7.2rem; }
+    .footer-where-grid{
+      grid-template-columns: minmax(0, 1fr) minmax(var(--col-dreta), auto);
+      gap: 0 1.5rem;
+    }
     /* En quatre línies, la lletra manuscrita tocava la línia de sota. */
     .cta h2{ line-height: 1.18; }
+  }
+  /* El correu no es pot partir i demana 162px: per sota d'aquesta
+     amplada no hi caben dues columnes al peu. */
+  @media (max-width: 389px){
+    .footer-contact-group{ grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
   }
   /* Només tauleta: sense el mínim de 901px aquest bloc guanyava al de
      900px per anar després, i tornava a posar 3 columnes al mòbil. */
@@ -1190,7 +1211,10 @@
     font-size: 1rem; line-height: 1.55;
     margin-bottom: 1.8rem;
   }
-  .form-grid{ display: grid; gap: 1rem; }
+  /* minmax(0,·) i min-width:0 perquè els camps puguin encongir-se:
+     sense això conserven l'amplada natural d'un input (275px) i se
+     surten del modal en mòbils estrets. */
+  .form-grid{ display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
   .form-field{ display: flex; flex-direction: column; gap: 0.4rem; }
   .form-field label{
     font-family: 'Bricolage Grotesque', sans-serif;
@@ -1208,6 +1232,8 @@
     border-radius: 12px;
     padding: 0.85rem 1rem;
     transition: border-color .2s, box-shadow .2s;
+    width: 100%;
+    min-width: 0;
   }
   .form-field textarea{ resize: vertical; min-height: 110px; }
   .form-field input:focus,
@@ -1589,7 +1615,7 @@
         <div>
           <p class="line"><strong>L'Hospitalet de Ll.:</strong></p>
           <p class="line">Escola Tecla Sala</p>
-          <p class="line" style="white-space:nowrap">Escola Busquets i Punset</p>
+          <p class="line">Escola Busquets i Punset</p>
           <p class="line">Escola Paco Candel</p>
         </div>
         <div>
