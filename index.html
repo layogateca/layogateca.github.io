@@ -144,7 +144,9 @@
   .hero h1{
     font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 700;
-    font-size: clamp(3.1rem, 5.6vw, 4.9rem);
+    /* El sostre puja de 4.9rem a 8rem: si el titular es quedava clavat,
+       a partir de 1400px creixia el buit i no el text. */
+    font-size: clamp(3.1rem, 5.6vw, 8rem);
     line-height: 0.92;
     letter-spacing: -0.04em;
     color: var(--ink);
@@ -187,34 +189,147 @@
     font-weight: 400;
   }
   .hero-actions{ display:flex; gap: 1rem; align-items:center; flex-wrap: wrap;}
-  /* A partir de 1280px hi ha lloc per posar els botons al buit de la
-     dreta sense que l'anell els trepitgi. Per sota, es queden a sota
-     del text. Ha d'anar després de la regla de dalt o no la guanya. */
-  @media (min-width: 1280px){
+  /* La targeta del buit de la dreta: mateix acabat que la xapa del titular
+     (vidre clar i filet), però rectangular perquè hi càpiga el text. */
+  /* El marc marca on va la targeta i fa de referència per a l'anell.
+     La targeta va després al DOM, o sigui que es pinta a sobre. */
+  .hero-card-wrap{ position: relative; }
+  .hero-card{
+    position: relative;
+    /* Opac del tot, no translúcid: amb vidre, el traç de l'anell es veia
+       a través i el cercle es llegia sencer. Aquest crema clar és el color
+       que ja hi feia la mescla sobre el fons de la portada. */
+    background: #fffaf2;
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: 1.7rem 1.6rem 1.5rem;
+    box-shadow: 0 18px 40px -28px rgba(58,36,24,0.55);
+    max-width: 27rem;
+  }
+  /* Amagat per defecte: al mòbil mana l'anell que va amb els botons. */
+  .c4-desk{ display: none; }
+  .hero-card-text{
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0 0 1.2rem;
+    font-weight: 400;
+  }
+  /* A l'escriptori l'anell bo és el de fora de la targeta; el que va amb
+     els botons (el del mòbil) es retira. */
+  @media (min-width: 901px){
+    .hero-actions .confetti.c4{ display: none; }
+    .c4-desk{
+      display: block;
+      border: 3px solid var(--accent-warm);
+      border-radius: 50%;
+      background: transparent;
+      opacity: 0.85;
+      animation: breathe-warm 4s ease-in-out infinite;
+    }
+  }
+  /* A partir de 1180px hi ha lloc per posar la targeta al buit de la dreta.
+     Per sota es queda a sota del text. Ha d'anar després de la regla de
+     dalt o no la guanya. */
+  @media (min-width: 1180px){
     .hero-content{
       max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 40rem) 1fr;
+      /* La columna del text s'estira amb la pantalla i la targeta es queda
+         a la dreta: així el buit del mig no creix sol en pantalles amples. */
+      grid-template-columns: minmax(0, 1fr) minmax(19rem, 25rem);
       /* Les tres files (xapa, titular, entradeta) han d'anar declarades:
-         sense elles el "grid-row: 1 / -1" dels botons no abasta res. */
+         sense elles el "grid-row: 1 / -1" de la targeta no abasta res. */
       grid-template-rows: repeat(3, auto);
-      column-gap: 4.5rem;
+      column-gap: clamp(3rem, 6vw, 8rem);
       align-items: center;
     }
     .hero-meta{ justify-self: start; }
     .hero-meta, .hero h1, .hero-lede{ grid-column: 1; }
-    .hero-actions{
+    /* El text no s'estira sense fre: passat aquest ample les línies es fan
+       incòmodes de llegir i el titular perd força. */
+    .hero h1{ max-width: 15ch; }
+    /* L'entradeta acompanya el titular: clavada a 42ch quedava com un
+       escaló sota un titular que ara és molt més ample. */
+    .hero-lede{
+      font-size: clamp(1.15rem, 1.05vw, 1.35rem);
+      max-width: 46ch;
+    }
+    .hero-card-wrap{
       grid-column: 2;
       grid-row: 1 / -1;
       align-self: center;
-      /* Ancorats a la dreta, deixant lliure la franja on viu l'anell
-         (11vw de separació més la seva mida): així acompanyen la
-         pantalla en comptes de quedar-se enganxats al text. */
       justify-self: end;
-      margin-right: calc(11vw + 7rem);
+      width: 100%;
+    }
+    .hero-card{
+      max-width: none;
+      width: 100%;
+      padding: 1.9rem 1.8rem 1.7rem;
+    }
+    .hero-actions{
       flex-direction: column;
       align-items: stretch;
       gap: 0.9rem;
+    }
+    /* L'anell creix amb la pantalla i s'ancora a la cantonada de dalt a
+       l'esquerra de la targeta: se n'amaga un quart al darrere. Mig anell
+       per fora en tots dos eixos, o sigui que en créixer baixa amb la
+       targeta i no puja cap a la capçalera. */
+    .c4-desk{
+      display: block;
+      width: clamp(90px, 8vw, 160px);
+      height: clamp(90px, 8vw, 160px);
+      bottom: calc(100% - clamp(90px, 8vw, 160px) / 2);
+      left: calc(clamp(90px, 8vw, 160px) / -2);
+    }
+    .confetti.c2{
+      width: 20px; height: 20px;
+      top: auto; right: auto;
+      bottom: -10px; left: -26px;
+      transform: rotate(15deg);
+      opacity: 0.5;
+    }
+    .confetti.c3{
+      width: 13px; height: 13px;
+      top: -22px; right: 34px; left: auto;
+      transform: none;
+      opacity: 0.65;
+    }
+  }
+  /* Pantalles molt grans (iMac i similars): el titular i la targeta guanyen
+     amplada perquè el buit del mig no s'obri sol. */
+  @media (min-width: 2000px){
+    .hero-content{ grid-template-columns: minmax(0, 1fr) minmax(24rem, 30rem); }
+    .hero h1{ max-width: 16ch; }
+    .hero-card-text{ font-size: 1.08rem; }
+  }
+  /* Entre 901 i 1179px no hi cap al costat: la targeta passa a sota del
+     text, s'eixampla i els botons hi tornen a anar de costat. L'anell salta
+     a la dreta, que a l'esquerra se sortia de la pantalla. */
+  @media (min-width: 901px) and (max-width: 1179px){
+    .hero-card-wrap{
+      margin-top: 0.5rem;
+      max-width: 34rem;
+    }
+    .hero-card{ max-width: none; }
+    .hero-actions{ gap: 0.9rem; }
+    .c4-desk{
+      width: 92px; height: 92px;
+      bottom: calc(100% - 46px); right: -46px;
+    }
+    .confetti.c2{
+      width: 18px; height: 18px;
+      top: auto; right: auto; left: -14px;
+      bottom: 22px;
+      transform: rotate(15deg);
+      opacity: 0.5;
+    }
+    .confetti.c3{
+      width: 12px; height: 12px;
+      top: -16px; right: 86px; left: auto;
+      transform: none;
+      opacity: 0.65;
     }
   }
 
@@ -1054,6 +1169,12 @@
     /* Sense buit lateral, el titular recupera tota l'amplada i els
        botons tornen a sota, en fila. */
     .hero-content{ display: block; max-width: none; }
+    /* Al mòbil la targeta desapareix com a caixa: els botons i les formes
+       tornen a penjar directament del text, tal com estaven. */
+    .hero-card-wrap, .hero-card{
+      display: contents;
+    }
+    .hero-card-text{ display: none; }
     .hero-actions{ flex-direction: row; gap: 1rem; align-items: center; }
     /* El titular obre la pàgina; la franja l'acompanya a sota. */
     .hero-visual{ height: clamp(160px, 42vw, 230px); }
@@ -1432,15 +1553,26 @@
     <p class="hero-lede">
       Un espai on el moviment, la respiració i l'atenció es converteixen en eines de creixement personal a totes les etapes de la vida.
     </p>
-    <div class="hero-actions">
-      <a href="https://www.instagram.com/layogateca/" target="_blank" rel="noopener" class="btn-primary">
-        Descobreix les classes
-        <span class="arr">→</span>
-      </a>
-      <a href="#" class="btn-ghost" data-open-form data-eyebrow="Prova una classe" data-lede="Deixa'ns les teves dades i et contactarem per reservar la teva classe.">Prova una classe</a>
-      <span class="confetti c4"></span>
-      <span class="confetti c2"></span>
-      <span class="confetti c3"></span>
+    <div class="hero-card-wrap">
+      <!-- L'anell de l'escriptori va aquí fora, davant de la targeta al DOM:
+           així la targeta el tapa pel simple ordre de pintat, sense capes
+           negatives (que no tots els navegadors respecten). -->
+      <span class="confetti c4-desk"></span>
+    <div class="hero-card">
+      <!-- ===== TEXT EDITABLE DE LA TARGETA DE PORTADA ===== -->
+      <p class="hero-card-text">Classes en grups reduïts, a prop teu. Escriu-nos i trobem junts el que millor et va.</p>
+      <!-- ================================================== -->
+      <div class="hero-actions">
+        <a href="https://www.instagram.com/layogateca/" target="_blank" rel="noopener" class="btn-primary">
+          Descobreix les classes
+          <span class="arr">→</span>
+        </a>
+        <a href="#" class="btn-ghost" data-open-form data-eyebrow="Prova una classe" data-lede="Deixa'ns les teves dades i et contactarem per reservar la teva classe.">Prova una classe</a>
+        <span class="confetti c4"></span>
+        <span class="confetti c2"></span>
+        <span class="confetti c3"></span>
+      </div>
+    </div>
     </div>
   </div>
   <div class="hero-visual">
