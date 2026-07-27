@@ -1086,18 +1086,21 @@
     }
     .confetti.c1{ top: auto; bottom: -7px; left: 9px; width: 12px; height: 12px; }
     /* El quadrat i el punt baixen amb l'anell: a dalt queien sobre la xapa.
-       Alçades desiguals perquè el grup no sembli una filera. */
+       Alçades desiguals perquè el grup no sembli una filera: el translúcid
+       queda avall i el punt petit puja en diagonal cap a la dreta.
+       La separació es fa amb translate, no amb marges: així el grup s'allarga
+       a la vista sense ocupar més fila, que a 320px feia saltar el punt petit. */
     .confetti.c2{
       position: static; display: block; flex: none;
       width: 13px; height: 13px;
       margin-left: -0.5rem;
-      transform: rotate(15deg) translateY(-13px);
+      transform: translate(8px, 14px) rotate(15deg);
     }
     .confetti.c3{
       position: static; flex: none;
       width: 9px; height: 9px;
       margin-left: -0.55rem;
-      transform: translateY(11px);
+      transform: translate(21px, -16px);
     }
     /* L'anell deixa de flotar i s'asseu al costat de "Prova una classe",
        que a dalt es muntava sobre la xapa d'activitats. */
@@ -1173,6 +1176,13 @@
      amplada no hi caben dues columnes al peu. */
   @media (max-width: 389px){
     .footer-contact-group{ grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  }
+  /* Per sota de 360px no hi ha amplada per al grup allargat: el punt petit
+     saltava de línia. Es recull tot el que cal perquè hi càpiga, mantenint
+     la mateixa diagonal. */
+  @media (max-width: 359px){
+    .confetti.c2{ margin-left: -10px; transform: translateY(12px) rotate(15deg); }
+    .confetti.c3{ margin-left: -10px; transform: translateY(-13px); }
   }
   /* Només tauleta: sense el mínim de 901px aquest bloc guanyava al de
      900px per anar després, i tornava a posar 3 columnes al mòbil. */
