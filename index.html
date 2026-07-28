@@ -50,6 +50,16 @@
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid rgba(240,138,75,0.15);
   }
+  .nav-left{ display:flex; align-items:center; gap: 1.8rem; }
+  /* Còpia de la xapa per al header: amagada per defecte (mana la del
+     mòbil, dins del hero), es mostra només a partir de 901px.
+     Seleccionada com "nav .nav-meta" (no només ".nav-meta") perquè la
+     regla base ".hero-meta{ display:inline-flex }" és posterior al
+     fitxer i, amb la mateixa especificitat, la guanyava igualment. */
+  nav .nav-meta{ display:none; margin-bottom: 0; }
+  @media (min-width: 901px){
+    nav .nav-meta{ display: inline-flex; }
+  }
   .brand{ display:flex; align-items: center; line-height:1; text-decoration:none; color:var(--ink); position:relative; z-index:2; }
   .brand img.logo{
     height: 92px; width: auto; display: block;
@@ -144,9 +154,11 @@
   .hero h1{
     font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 700;
-    /* El sostre puja de 4.9rem a 8rem: si el titular es quedava clavat,
-       a partir de 1400px creixia el buit i no el text. */
-    font-size: clamp(3.1rem, 5.6vw, 8rem);
+    /* El sostre és 5.75rem: la columna de text ara és fixa (38rem, vegeu
+       .hero-content a l'escriptori) perquè hi viu sobre la foto, i amb el
+       sostre vell de 8rem "Ioga per a" ja no hi cabia en una línia a les
+       pantalles amples i partia en dues. */
+    font-size: clamp(3.1rem, 5.6vw, 5.75rem);
     line-height: 0.92;
     letter-spacing: -0.04em;
     color: var(--ink);
@@ -158,18 +170,6 @@
     color: var(--accent-warm);
     display: inline-block;
     position: relative;
-  }
-  .hero h1 .big::after{
-    content: '';
-    position: absolute;
-    bottom: 8%;
-    left: -2%;
-    right: -2%;
-    height: 14%;
-    background: var(--accent-sun);
-    z-index: -1;
-    border-radius: 999px;
-    opacity: 0.55;
   }
   .hero h1 .script{
     font-family: 'Caveat', cursive;
@@ -208,131 +208,15 @@
   }
   /* Amagat per defecte: al mòbil mana l'anell que va amb els botons. */
   .c4-desk{ display: none; }
+  /* Mateixa mida i interlineat que l'entradeta de sobre (.hero-lede):
+     a 1rem es veia clarament més petit i desentonava. */
   .hero-card-text{
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.15rem;
+    line-height: 1.55;
     color: var(--ink-soft);
     margin: 0 0 1.2rem;
     font-weight: 400;
   }
-  /* A l'escriptori l'anell bo és el de fora de la targeta; el que va amb
-     els botons (el del mòbil) es retira. */
-  @media (min-width: 901px){
-    .hero-actions .confetti.c4{ display: none; }
-    .c4-desk{
-      display: block;
-      border: 3px solid var(--accent-warm);
-      border-radius: 50%;
-      background: transparent;
-      opacity: 0.85;
-      animation: breathe-warm 4s ease-in-out infinite;
-    }
-  }
-  /* A partir de 1180px hi ha lloc per posar la targeta al buit de la dreta.
-     Per sota es queda a sota del text. Ha d'anar després de la regla de
-     dalt o no la guanya. */
-  @media (min-width: 1180px){
-    .hero-content{
-      max-width: none;
-      display: grid;
-      /* La columna del text s'estira amb la pantalla i la targeta es queda
-         a la dreta: així el buit del mig no creix sol en pantalles amples. */
-      grid-template-columns: minmax(0, 1fr) minmax(19rem, 25rem);
-      /* Les tres files (xapa, titular, entradeta) han d'anar declarades:
-         sense elles el "grid-row: 1 / -1" de la targeta no abasta res. */
-      grid-template-rows: repeat(3, auto);
-      column-gap: clamp(3rem, 6vw, 8rem);
-      align-items: center;
-    }
-    .hero-meta{ justify-self: start; }
-    .hero-meta, .hero h1, .hero-lede{ grid-column: 1; }
-    /* El text no s'estira sense fre: passat aquest ample les línies es fan
-       incòmodes de llegir i el titular perd força. */
-    .hero h1{ max-width: 15ch; }
-    /* L'entradeta acompanya el titular: clavada a 42ch quedava com un
-       escaló sota un titular que ara és molt més ample. */
-    .hero-lede{
-      font-size: clamp(1.15rem, 1.05vw, 1.35rem);
-      max-width: 46ch;
-    }
-    .hero-card-wrap{
-      grid-column: 2;
-      grid-row: 1 / -1;
-      align-self: center;
-      justify-self: end;
-      width: 100%;
-    }
-    .hero-card{
-      max-width: none;
-      width: 100%;
-      padding: 1.9rem 1.8rem 1.7rem;
-    }
-    .hero-actions{
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.9rem;
-    }
-    /* L'anell creix amb la pantalla i s'ancora a la cantonada de dalt a
-       l'esquerra de la targeta: se n'amaga un quart al darrere. Mig anell
-       per fora en tots dos eixos, o sigui que en créixer baixa amb la
-       targeta i no puja cap a la capçalera. */
-    .c4-desk{
-      display: block;
-      width: clamp(90px, 8vw, 160px);
-      height: clamp(90px, 8vw, 160px);
-      bottom: calc(100% - clamp(90px, 8vw, 160px) / 2);
-      left: calc(clamp(90px, 8vw, 160px) / -2);
-    }
-    .confetti.c2{
-      width: 20px; height: 20px;
-      top: auto; right: auto;
-      bottom: -10px; left: -26px;
-      transform: rotate(15deg);
-      opacity: 0.5;
-    }
-    .confetti.c3{
-      width: 13px; height: 13px;
-      top: -22px; right: 34px; left: auto;
-      transform: none;
-      opacity: 0.65;
-    }
-  }
-  /* Pantalles molt grans (iMac i similars): el titular i la targeta guanyen
-     amplada perquè el buit del mig no s'obri sol. */
-  @media (min-width: 2000px){
-    .hero-content{ grid-template-columns: minmax(0, 1fr) minmax(24rem, 30rem); }
-    .hero h1{ max-width: 16ch; }
-    .hero-card-text{ font-size: 1.08rem; }
-  }
-  /* Entre 901 i 1179px no hi cap al costat: la targeta passa a sota del
-     text, s'eixampla i els botons hi tornen a anar de costat. L'anell salta
-     a la dreta, que a l'esquerra se sortia de la pantalla. */
-  @media (min-width: 901px) and (max-width: 1179px){
-    .hero-card-wrap{
-      margin-top: 0.5rem;
-      max-width: 34rem;
-    }
-    .hero-card{ max-width: none; }
-    .hero-actions{ gap: 0.9rem; }
-    .c4-desk{
-      width: 92px; height: 92px;
-      bottom: calc(100% - 46px); right: -46px;
-    }
-    .confetti.c2{
-      width: 18px; height: 18px;
-      top: auto; right: auto; left: -14px;
-      bottom: 22px;
-      transform: rotate(15deg);
-      opacity: 0.5;
-    }
-    .confetti.c3{
-      width: 12px; height: 12px;
-      top: -16px; right: 86px; left: auto;
-      transform: none;
-      opacity: 0.65;
-    }
-  }
-
   .btn-primary{
     display:inline-flex; align-items:center; gap: 0.6rem;
     background: var(--ink);
@@ -432,6 +316,125 @@
     50% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 18px rgba(204,122,87,0); }
   }
 
+  /* ---------- HERO D'ESCRIPTORI: LA FOTO PASSA A SER EL FONS ----------
+     La franja deixa de ser una postal emmarcada sota el text i es
+     converteix en el fons de tot el hero, de cantó a cantó. L'anell, els
+     punts i la xapa "Respira · Observa · Connecta" es retiren d'aquesta
+     composició: es queden amagats al codi (.c4-desk i .breath-indicator
+     conserven el seu disseny) per reaprofitar-los en un altre bloc.
+     Ha d'anar després de les regles base de .hero-visual/.hero-img o no
+     les guanya (mateixa especificitat, i la base és posterior al fitxer). */
+  @media (min-width: 901px){
+    /* La foto es rebaixa: sense la xapa dins del hero, l'apilat de text
+       és més curt i la franja ja no necessita tanta alçada. */
+    .hero{
+      align-content: start;
+      min-height: auto;
+      padding-top: 3rem;
+    }
+    /* La xapa ara viu al header (.nav-meta); aquí es retira. */
+    .hero-content > .hero-meta{ display: none; }
+    /* El punt verd surt del flux (abans anava a sobre del titular i
+       l'empenyia avall amb el seu propi espai): es fixa sota el terç
+       dret del cercle del logo (48px + 59.25px, mesurat sobre la
+       imatge), a la mateixa alçada que tenia. Mida +10% (14px -> 15.4px)
+       i respira: creix i s'encongeix com el punt verd de la franja. */
+    .confetti.c1{
+      position: absolute;
+      /* Un terç més a prop de la I d'"Ioga": es recorre un terç del
+         vector que separava el centre del punt (107.25,55) del cantó
+         superior esquerre de la I (135,72), tots dos relatius al hero. */
+      top: 53px;
+      width: 15.4px;
+      height: 15.4px;
+      left: 108.8px;
+      margin: 0;
+      /* Sense z-index quedava per darrere de la foto (z-index:0) i no
+         es veia gens. */
+      z-index: 2;
+      animation: breathe-dot 4s ease-in-out infinite;
+    }
+    /* La sospira també amb una ombra del mateix verd, més translúcida,
+       que en el punt més gran arriba gairebé a tocar la I d'"Ioga"
+       (uns 37px de centre a centre; la I hi és a uns 34px). No ha
+       calgut baixar el punt: l'ombra no arriba a la capçalera de dalt. */
+    @keyframes breathe-dot{
+      0%, 100%{
+        transform: scale(0.85);
+        box-shadow: 0 0 6px 6px rgba(143,178,106,0.32);
+      }
+      50%{
+        transform: scale(1.15);
+        box-shadow: 0 0 16px 20px rgba(143,178,106,0.16);
+      }
+    }
+    /* El bloc de titular, entradeta i targeta torna cap a l'esquerra,
+       fins al cantó DRET del cercle del logo (48px + 86.7px mesurats
+       sobre la imatge). Amb el cantó ESQUERRE (52px) el bloc començava
+       just davant del punt (94px) i la diagonal quedava al revés: el
+       punt requeia a sobre de les primeres lletres en lloc de quedar
+       a la seva esquerra. Així el punt queda clarament per fora, a
+       dalt a l'esquerra del titular. */
+    .hero-content{
+      position: relative;
+      z-index: 2;
+      max-width: 38rem;
+      margin-left: 87px;
+    }
+    /* Sense el punt al davant, el titular perdia els ~24px d'espai que
+       el punt i el seu marge li deixaven a sobre. */
+    .hero-content h1{ margin-top: 24px; }
+    .hero-actions{ flex-direction: row; align-items: center; }
+    /* L'anell i els punts es retiren d'aquesta composició. */
+    .hero-actions .confetti{ display: none; }
+    /* La targeta perd la caixa: el text flota directament sobre la foto,
+       amb el vel del degradat de sota fent de contrast. */
+    .hero-card{
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      max-width: none;
+      width: auto;
+    }
+    /* La franja passa de postal emmarcada a fons a sang de tot el hero. */
+    .hero-visual{
+      position: absolute;
+      inset: 0;
+      height: auto;
+      z-index: 0;
+    }
+    .hero-visual::before{ display: none; }
+    .hero-img{
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      /* La foto es desplaça encara més cap a l'esquerra (es veu més del
+         seu costat esquerre) perquè el mudra caigui al darrer terç de
+         la franja, ben lliure del vel. Amb valors negatius, a les
+         amplades més estretes (901-1024px) l'alçada de la franja es
+         reescurça i la finestra visible ja no arriba al mudra: es
+         quedava tallat i fins i tot s'obria una vora buida a l'esquerra. */
+      background-position: 0% center;
+      /* Vel càlid més dens a l'esquerra, on viu el text, que s'esvaeix
+         cap a la dreta perquè la foto es vegi amb claredat. Amidat en
+         píxels (no %) perquè la columna de text té una amplada fixa
+         (38rem + el padding): amb percentatges, en pantalles estretes
+         el vel s'acabava massa aviat i tallava el text pel mig. Es
+         desplaça una mica més a la dreta perquè cobreixi bé el text
+         editable de sota. L'últim tram és en % (no px), perquè arribi
+         sempre exactament al cantó dret de la foto sigui quina sigui
+         l'amplada; ja no baixa fins a 0: es queda en un 0.1 molt subtil
+         perquè tota la foto, fins a la punta, tingui una mica de vel. */
+      background-image:
+        linear-gradient(100deg, rgba(255,246,236,0.95) 0, rgba(255,246,236,0.88) 620px, rgba(255,246,236,0.38) 920px, rgba(255,246,236,0.1) 100%),
+        linear-gradient(180deg, rgba(58,36,24,0.04), rgba(58,36,24,0.16)),
+        url('assets/hero-banda.jpg');
+    }
+    /* Es guarda amagada per reaprofitar-la en un altre bloc. */
+    .breath-indicator{ display: none; }
+  }
+
   /* ---------- MANIFEST ---------- */
   .manifest{
     padding: 8rem 3rem 7rem;
@@ -441,7 +444,9 @@
   .manifest-inner{
     max-width: 1100px; margin: 0 auto;
     display: grid;
-    grid-template-columns: 0.35fr 1fr;
+    /* La columna de l'etiqueta s'estreny un terç (de 0.35fr a 0.23fr):
+       així el text comença més a l'esquerra i queda més apaisat. */
+    grid-template-columns: 0.23fr 1fr;
     gap: 4rem;
     align-items: start;
   }
@@ -457,7 +462,8 @@
   }
   .manifest-text{
     font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: clamp(1.7rem, 2.8vw, 2.7rem);
+    /* 20% més petit que abans (1.7/2.8/2.7 -> 1.36/2.24/2.16). */
+    font-size: clamp(1.36rem, 2.24vw, 2.16rem);
     line-height: 1.2;
     color: var(--ink);
     font-weight: 500;
@@ -507,6 +513,10 @@
     max-width: 380px;
   }
   .pillars-badge{
+    /* Relative + z-index: per sobre de l'anell de sota, que el tapa
+       pel darrere. */
+    position: relative;
+    z-index: 1;
     background: #fff;
     padding: 1rem 1.3rem;
     border-radius: 999px;
@@ -516,6 +526,24 @@
     font-weight: 600;
     box-shadow: 0 10px 30px rgba(58,36,24,0.1);
     display: inline-flex; align-items: center; gap: 0.6rem;
+  }
+  /* L'anell que respirava a la portada, reaprofitat aquí: es planta
+     a la cantonada superior esquerra de la xapa, centrat exactament
+     sobre el cantó, així que un quart queda per darrere (la xapa és
+     opaca i el tapa) i els altres tres quarts, visibles. */
+  .pillars-badge-wrap{ position: relative; }
+  .pillars-badge-wrap .c4-desk{
+    display: block;
+    width: 74px;
+    height: 74px;
+    top: -37px;
+    left: -37px;
+    border: 3px solid var(--accent-warm);
+    border-radius: 50%;
+    background: transparent;
+    opacity: 0.85;
+    animation: breathe-warm 4s ease-in-out infinite;
+    z-index: 0;
   }
   .pillars-badge .emoji{
     width: 28px; height: 28px; border-radius: 50%;
@@ -1312,6 +1340,21 @@
     .footer-brand{ grid-column: 1 / -1; order: -1; }
     .footer-reviews{ grid-template-columns: 1fr 1fr 1fr; }
   }
+  /* Amb la xapa al costat del logo hi ha menys amplada per als enllaços:
+     entre 901 i 1300px es cenyeix tot perquè "On som" i "Ets profe?" no
+     partissin en dues línies. */
+  @media (min-width: 901px) and (max-width: 1300px){
+    nav{ padding: 0 1.2rem; }
+    .nav-left{ gap: 0.85rem; }
+    .nav-meta{
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      padding: 0.5rem 0.8rem;
+      gap: 0.45rem;
+    }
+    .nav-links{ gap: 0.7rem; }
+    .nav-links a{ font-size: 0.76rem; white-space: nowrap; }
+  }
   /* ---------- FORM MODAL ---------- */
   .form-overlay{
     position: fixed; inset: 0;
@@ -1520,14 +1563,25 @@
 
 <!-- ============ NAV ============ -->
 <nav>
-  <a href="#" class="brand" aria-label="La Yogateca">
-    <img class="logo" src="assets/logo-black-transparent.png" alt="La Yogateca — Estudi de ioga">
-  </a>
+  <div class="nav-left">
+    <a href="#" class="brand" aria-label="La Yogateca">
+      <img class="logo" src="assets/logo-black-transparent.png" alt="La Yogateca — Estudi de ioga">
+    </a>
+    <!-- Còpia de la xapa per a l'escriptori (vegeu .hero-meta a l'escriptori,
+         amagada): al mòbil mana la de dins del hero, sense tocar. -->
+    <div class="hero-meta nav-meta">
+      <span>Extraescolars</span>
+      <span class="pill-dot"></span>
+      <span>Famílies</span>
+      <span class="pill-dot"></span>
+      <span>Adults</span>
+    </div>
+  </div>
   <ul class="nav-links">
-    <li><a href="#metode">Mètode</a></li>
-    <li><a href="#activitats">Activitats</a></li>
+    <li><a href="#activitats">Classes</a></li>
     <li><a href="#on-som">On som</a></li>
     <li><a href="#events">Esdeveniments</a></li>
+    <li><a href="#" data-open-form data-eyebrow="Ets profe?" data-lede="Ets professional del ioga o vols col·laborar amb nosaltres? Deixa'ns les teves dades i et contactarem." data-interest="professionals">Ets profe?</a></li>
     <li><a href="#contacte">Contacte</a></li>
     <li><a href="#" class="lang-pill">ES</a></li>
   </ul>
@@ -1536,9 +1590,12 @@
 <!-- ============ HERO ============ -->
 <section class="hero">
 
+  <!-- El punt verd es queda aquí (surt de la xapa, que ara viu al header):
+       germà de .hero-content, no fill seu, perquè a l'escriptori es fixa
+       sota el logo i el desplaçament del bloc de text no l'arrossegui. -->
+  <span class="confetti c1"></span>
   <div class="hero-content">
     <div class="hero-meta">
-      <span class="confetti c1"></span>
       <span>Extraescolars</span>
       <span class="pill-dot"></span>
       <span>Famílies</span>
@@ -1554,13 +1611,9 @@
       Un espai on el moviment, la respiració i l'atenció es converteixen en eines de creixement personal a totes les etapes de la vida.
     </p>
     <div class="hero-card-wrap">
-      <!-- L'anell de l'escriptori va aquí fora, davant de la targeta al DOM:
-           així la targeta el tapa pel simple ordre de pintat, sense capes
-           negatives (que no tots els navegadors respecten). -->
-      <span class="confetti c4-desk"></span>
     <div class="hero-card">
       <!-- ===== TEXT EDITABLE DE LA TARGETA DE PORTADA ===== -->
-      <p class="hero-card-text">Classes en grups reduïts, a prop teu. Escriu-nos i trobem junts el que millor et va.</p>
+      <p class="hero-card-text">Classes en grups reduïts, a prop teu. Escriu-nos i trobem<br>junts el que millor et va.</p>
       <!-- ================================================== -->
       <div class="hero-actions">
         <a href="https://www.instagram.com/layogateca/" target="_blank" rel="noopener" class="btn-primary">
@@ -1599,9 +1652,15 @@
   <div class="pillars-header">
     <h2>Tres <em>eixos</em><br>de La Yogateca</h2>
     <div class="pillars-header-right">
-      <div class="pillars-badge">
-        <span class="emoji"></span>
-        Un lloc segur per respirar
+      <div class="pillars-badge-wrap">
+        <!-- L'anell que abans respirava a la portada, reaprofitat aquí:
+             va abans de la xapa al DOM perquè la xapa (opaca) el tapi
+             pel simple ordre de pintat, deixant-ne tres quarts visibles. -->
+        <span class="confetti c4-desk"></span>
+        <div class="pillars-badge">
+          <span class="emoji"></span>
+          Un lloc segur per respirar
+        </div>
       </div>
     </div>
   </div>
@@ -2063,6 +2122,7 @@
             <option value="families">Ioga en família</option>
             <option value="bases">Ioga des de les Bases</option>
             <option value="extraescolar">Informació curs extraescolar</option>
+            <option value="professionals">Sóc professional / vull col·laborar</option>
             <option value="altres">Altres</option>
           </select>
         </div>
