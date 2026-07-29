@@ -283,30 +283,9 @@
     filter: saturate(1.02);
   }
 
-  /* Breathing indicator */
-  /* Viu dins la franja com una xapa, per no trepitjar la foto. */
-  .breath-indicator{
-    position: absolute;
-    bottom: 1.4rem; left: 1.4rem;
-    z-index: 3;
-    display: flex; align-items: center; gap: 0.7rem;
-    background: rgba(255,246,236,0.86);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    padding: 0.55rem 1.1rem;
-    border-radius: 999px;
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 0.78rem; letter-spacing: 0.26em;
-    text-transform: uppercase; color: var(--ink);
-    font-weight: 600;
-    box-shadow: 0 6px 18px rgba(58,36,24,0.12);
-  }
-  .breath-circle{
-    width: 12px; height: 12px; border-radius: 50%;
-    background: var(--accent-green);
-    animation: breathe 4s ease-in-out infinite;
-    box-shadow: 0 0 0 0 rgba(143,178,106,0.5);
-  }
+  /* La xapa "Respira · Observa · Connecta" que vivia sobre la franja de
+     la portada es reaprofita a .pillars-badge (Tres eixos); l'animació
+     de respiració es conserva aquí per a l'.emoji d'aquella xapa. */
   @keyframes breathe {
     0%, 100% { transform: scale(0.75); opacity: 0.7; box-shadow: 0 0 0 0 rgba(143,178,106,0.5);}
     50% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 12px rgba(143,178,106,0); }
@@ -318,12 +297,12 @@
 
   /* ---------- HERO D'ESCRIPTORI: LA FOTO PASSA A SER EL FONS ----------
      La franja deixa de ser una postal emmarcada sota el text i es
-     converteix en el fons de tot el hero, de cantó a cantó. L'anell, els
-     punts i la xapa "Respira · Observa · Connecta" es retiren d'aquesta
-     composició: es queden amagats al codi (.c4-desk i .breath-indicator
-     conserven el seu disseny) per reaprofitar-los en un altre bloc.
-     Ha d'anar després de les regles base de .hero-visual/.hero-img o no
-     les guanya (mateixa especificitat, i la base és posterior al fitxer). */
+     converteix en el fons de tot el hero, de cantó a cantó. L'anell i els
+     punts es retiren d'aquesta composició: es queden amagats al codi
+     (.c4-desk conserva el seu disseny) per reaprofitar-los en un altre
+     bloc. Ha d'anar després de les regles base de .hero-visual/.hero-img
+     o no les guanya (mateixa especificitat, i la base és posterior al
+     fitxer). */
   @media (min-width: 901px){
     /* La foto es rebaixa: sense la xapa dins del hero, l'apilat de text
        és més curt i la franja ja no necessita tanta alçada. */
@@ -334,39 +313,38 @@
     }
     /* La xapa ara viu al header (.nav-meta); aquí es retira. */
     .hero-content > .hero-meta{ display: none; }
-    /* El punt verd surt del flux (abans anava a sobre del titular i
-       l'empenyia avall amb el seu propi espai): es fixa sota el terç
-       dret del cercle del logo (48px + 59.25px, mesurat sobre la
-       imatge), a la mateixa alçada que tenia. Mida +10% (14px -> 15.4px)
-       i respira: creix i s'encongeix com el punt verd de la franja. */
-    .confetti.c1{
+    /* El punt verd es retira d'aquí (es queda amagat; al mòbil segueix
+       vivint amb la xapa, sense tocar). En el seu lloc, l'anell. */
+    .confetti.c1{ display: none; }
+    /* L'anell, ajustat amb mesures precises sobre l'anterior versió:
+       - Diàmetre: 50% més petit (440px -> 220px).
+       - Línia: 40% més fina (l'anterior feia un 2% de gruix sobre un
+         radi de 220px, 4.4px; ara 2.64px, un 2.4% sobre el nou radi
+         de 110px).
+       - Centre: sota el cantó esquerre del cercle del logo (52.4px,
+         mesurat sobre la imatge) i a un terç de la distància entre la
+         línia de la capçalera (0, en coordenades del hero) i el cim
+         de la I d'"Ioga" (72px més avall), és a dir a 24px.
+         top = 24 - 110 (radi) = -86px; left = 52.4 - 110 = -57.6px.
+       - Velocitat: 50% més lenta (4s -> 6s).
+       - Es funde a 0% de visibilitat als extrems del cicle i torna a
+         aparèixer gradualment cap al mig, en lloc de quedar-se sempre
+         visible. */
+    .c4-desk{
+      display: block;
       position: absolute;
-      /* Un terç més a prop de la I d'"Ioga": es recorre un terç del
-         vector que separava el centre del punt (107.25,55) del cantó
-         superior esquerre de la I (135,72), tots dos relatius al hero. */
-      top: 53px;
-      width: 15.4px;
-      height: 15.4px;
-      left: 108.8px;
-      margin: 0;
-      /* Sense z-index quedava per darrere de la foto (z-index:0) i no
-         es veia gens. */
-      z-index: 2;
-      animation: breathe-dot 4s ease-in-out infinite;
+      width: 220px; height: 220px;
+      top: -86px; left: -57.6px;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle, transparent 58.8%, rgba(238,108,62,0.2) 60%, transparent 61.2%);
+      z-index: 1;
+      animation: breathe-ring-soft 6s ease-in-out infinite;
     }
-    /* La sospira també amb una ombra del mateix verd, més translúcida,
-       que en el punt més gran arriba gairebé a tocar la I d'"Ioga"
-       (uns 37px de centre a centre; la I hi és a uns 34px). No ha
-       calgut baixar el punt: l'ombra no arriba a la capçalera de dalt. */
-    @keyframes breathe-dot{
-      0%, 100%{
-        transform: scale(0.85);
-        box-shadow: 0 0 6px 6px rgba(143,178,106,0.32);
-      }
-      50%{
-        transform: scale(1.15);
-        box-shadow: 0 0 16px 20px rgba(143,178,106,0.16);
-      }
+    @keyframes breathe-ring-soft{
+      0%{ transform: scale(0.92); opacity: 0; }
+      50%{ transform: scale(1.06); opacity: 1; }
+      100%{ transform: scale(0.92); opacity: 0; }
     }
     /* El bloc de titular, entradeta i targeta torna cap a l'esquerra,
        fins al cantó DRET del cercle del logo (48px + 86.7px mesurats
@@ -431,8 +409,6 @@
         linear-gradient(180deg, rgba(58,36,24,0.04), rgba(58,36,24,0.16)),
         url('assets/hero-banda.jpg');
     }
-    /* Es guarda amagada per reaprofitar-la en un altre bloc. */
-    .breath-indicator{ display: none; }
   }
 
   /* ---------- MANIFEST ---------- */
@@ -514,43 +490,32 @@
     gap: 1.4rem;
     max-width: 380px;
   }
+  /* Xapa "Respira · Observa · Connecta": abans vivia sobre la franja
+     de la portada, reaprofitada aquí amb el mateix vidre esvaït. */
   .pillars-badge{
     /* Relative + z-index: per sobre de l'anell de sota, que el tapa
        pel darrere. */
     position: relative;
     z-index: 1;
-    background: #fff;
-    padding: 1rem 1.3rem;
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: rgba(255,246,236,0.86);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    padding: 0.7rem 1.3rem;
     border-radius: 999px;
-    font-family: 'Caveat', cursive;
-    font-size: 1.4rem;
-    color: var(--accent-warm);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.26em;
+    text-transform: uppercase; color: var(--ink);
     font-weight: 600;
-    box-shadow: 0 10px 30px rgba(58,36,24,0.1);
-    display: inline-flex; align-items: center; gap: 0.6rem;
+    box-shadow: 0 6px 18px rgba(58,36,24,0.12);
   }
-  /* L'anell que respirava a la portada, reaprofitat aquí: es planta
-     a la cantonada superior esquerra de la xapa, centrat exactament
-     sobre el cantó, així que un quart queda per darrere (la xapa és
-     opaca i el tapa) i els altres tres quarts, visibles. */
   .pillars-badge-wrap{ position: relative; }
-  .pillars-badge-wrap .c4-desk{
-    display: block;
-    width: 74px;
-    height: 74px;
-    top: -37px;
-    left: -37px;
-    border: 3px solid var(--accent-warm);
-    border-radius: 50%;
-    background: transparent;
-    opacity: 0.85;
-    animation: breathe-warm 4s ease-in-out infinite;
-    z-index: 0;
-  }
   .pillars-badge .emoji{
-    width: 28px; height: 28px; border-radius: 50%;
+    width: 12px; height: 12px; border-radius: 50%;
     background: var(--accent-green);
     display: inline-block;
+    animation: breathe 4s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(143,178,106,0.5);
   }
   .pillars-header h2{
     font-family: 'Bricolage Grotesque', sans-serif;
@@ -1210,7 +1175,6 @@
     .hero-card-wrap, .hero-card{
       display: contents;
     }
-    .hero-card-text{ display: none; }
     .hero-actions{ flex-direction: row; gap: 1rem; align-items: center; }
     /* El titular obre la pàgina; la franja l'acompanya a sota. */
     .hero-visual{ height: clamp(160px, 42vw, 230px); }
@@ -1222,12 +1186,6 @@
         linear-gradient(180deg, rgba(58,36,24,0.02), rgba(58,36,24,0.1)),
         url('assets/hero-banda-mobil.jpg');
     }
-    .breath-indicator{
-      bottom: 0.85rem; left: 0.85rem;
-      font-size: 0.62rem; letter-spacing: 0.18em;
-      padding: 0.42rem 0.8rem; gap: 0.5rem;
-    }
-    .breath-circle{ width: 9px; height: 9px; }
     /* Sense buit lateral, les formes es retiren a les cantonades. */
     /* Ancorat a la xapa, com a l'escriptori: espia per sota del cantó. */
     /* La xapa demanava 358px i es tallava per sota de 380px d'amplada:
@@ -1598,10 +1556,14 @@
 <!-- ============ HERO ============ -->
 <section class="hero">
 
-  <!-- El punt verd es queda aquí (surt de la xapa, que ara viu al header):
-       germà de .hero-content, no fill seu, perquè a l'escriptori es fixa
-       sota el logo i el desplaçament del bloc de text no l'arrossegui. -->
+  <!-- El punt verd es queda al mòbil (surt de la xapa, que ara viu al
+       header); a l'escriptori es reemplaça per l'anell de sota. Tots dos
+       germans de .hero-content, no fills seus, perquè el desplaçament
+       del bloc de text no els arrossegui. -->
   <span class="confetti c1"></span>
+  <!-- L'anell, reaprofitat de nou: abans a la portada, després a la
+       xapa "Respira · Observa · Connecta", ara aquí. -->
+  <span class="confetti c4-desk"></span>
   <div class="hero-content">
     <div class="hero-meta">
       <span>Extraescolars</span>
@@ -1638,10 +1600,6 @@
   </div>
   <div class="hero-visual">
     <div class="hero-img"></div>
-    <div class="breath-indicator">
-      <span class="breath-circle"></span>
-      <span>Respira · Observa · Connecta</span>
-    </div>
   </div>
 </section>
 
@@ -1661,13 +1619,9 @@
     <h2>Tres <em>eixos</em><br>de La Yogateca</h2>
     <div class="pillars-header-right">
       <div class="pillars-badge-wrap">
-        <!-- L'anell que abans respirava a la portada, reaprofitat aquí:
-             va abans de la xapa al DOM perquè la xapa (opaca) el tapi
-             pel simple ordre de pintat, deixant-ne tres quarts visibles. -->
-        <span class="confetti c4-desk"></span>
         <div class="pillars-badge">
           <span class="emoji"></span>
-          Un lloc segur per respirar
+          Respira · Observa · Connecta
         </div>
       </div>
     </div>
