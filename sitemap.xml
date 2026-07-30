@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://layogateca.com/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/cat/</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/ioga-des-de-les-bases.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/ioga-des-de-les-bases.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/ioga-des-de-les-bases.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/ioga-des-de-les-bases.html"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/cat/ioga-des-de-les-bases.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/ioga-des-de-les-bases.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/ioga-des-de-les-bases.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/ioga-des-de-les-bases.html"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/avis-legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/avis-legal.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/avis-legal.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/avis-legal.html"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/cat/avis-legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/avis-legal.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/avis-legal.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/avis-legal.html"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/politica-de-privacitat.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/politica-de-privacitat.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/politica-de-privacitat.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/politica-de-privacitat.html"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://layogateca.com/cat/politica-de-privacitat.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/politica-de-privacitat.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://layogateca.com/politica-de-privacitat.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://layogateca.com/politica-de-privacitat.html"/>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
