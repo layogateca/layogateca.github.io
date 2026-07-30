@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Yogateca — Estudi de ioga</title>
+<meta name="description" content="Ensenyem ioga real com a assignatura de vida des de la infància. El moviment, la respiració i l'atenció es converteixen en eines de creixement personal a totes les etapes de la vida.">
 <link rel="icon" href="../assets/logo-black-transparent.png" type="image/png">
 <link rel="canonical" href="https://layogateca.com/cat/">
 <link rel="alternate" hreflang="ca" href="https://layogateca.com/cat/">
@@ -1266,25 +1267,8 @@
     }
     /* El punt verd vivia penjat de la xapa, que ara viu al header. */
     .confetti.c1{ display: none; }
-    /* L'anell en moviment, reaprofitat de l'escriptori: a la cantonada
-       superior del hero, tallat per la línia del header (overflow:hidden
-       de .hero) perquè no es vegi sencer. El centre cau entre el primer
-       i segon terç de l'anell respecte d'aquesta línia. */
-    .c4-desk{
-      display: block;
-      position: absolute;
-      width: 56px; height: 56px;
-      top: -22px; left: -18px;
-      border-radius: 50%;
-      border: 1.9px solid rgba(238,108,62,0.65);
-      background: transparent;
-      z-index: 3;
-      animation: breathe-ring-mobile 6s ease-in-out infinite;
-    }
-    @keyframes breathe-ring-mobile{
-      0%, 100%{ transform: scale(0.85); opacity: 0; }
-      50%{ transform: scale(1); opacity: 1; }
-    }
+    /* L'anell es reserva a l'escriptori; al mòbil es manté amagat. */
+    .c4-desk{ display: none; }
     /* Les formes petites que penjaven del botó "Prova una classe" ja no
        fan falta: l'anell en moviment de la foto en fa la funció. */
     .hero-actions .confetti{ display: none; }
